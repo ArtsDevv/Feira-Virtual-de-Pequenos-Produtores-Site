@@ -1,24 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // 1. Verifica a Autenticação e Autorização
+    // 1. Verifica a Autenticação
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
 
-    // Se não tiver ninguém logado OU se o tipo não for 'produtor', joga para fora
     if (!usuarioLogado || usuarioLogado.tipo !== 'produtor') {
         alert("Acesso restrito! Esta área é exclusiva para Produtores Parceiros.");
         window.location.href = "../index.html";
         return;
     }
 
-    // 2. Personaliza a página com os dados do Produtor
+    // 2. Personaliza a Saudação Baseada no Horário
     const tituloBoasVindas = document.getElementById("boas-vindas");
     if (tituloBoasVindas) {
-        // Pega apenas o primeiro nome (ex: "Sítio São José" -> "Sítio")
         const primeiroNome = usuarioLogado.nome.split(" ")[0];
-        tituloBoasVindas.innerText = `Olá, ${primeiroNome}!`;
+        const horaAtual = new Date().getHours();
+        let saudacao = "Olá";
+
+        if (horaAtual >= 5 && horaAtual < 12) saudacao = "Bom dia";
+        else if (horaAtual >= 12 && horaAtual < 18) saudacao = "Boa tarde";
+        else saudacao = "Boa noite";
+
+        tituloBoasVindas.innerText = `${saudacao}, ${primeiroNome}!`;
     }
 
-    // 3. Configura a função de Sair da Conta
+    // 3. Botão Sair
     const btnSair = document.getElementById("btn-sair-painel");
     if (btnSair) {
         btnSair.addEventListener("click", () => {
@@ -29,12 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 4. Configura o botão para a futura tela de Cadastro de Produtos
+    // 4. Botão Cadastrar Novo Produto
     const btnNovoProduto = document.getElementById("btn-novo-produto");
     if (btnNovoProduto) {
         btnNovoProduto.addEventListener("click", () => {
-            // Este é o link para a página que construiremos logo em seguida
-            window.location.href = "./cadastro-de-produtos.html";
+            window.location.href = "./cadastro-produtos.html";
         });
     }
 });
