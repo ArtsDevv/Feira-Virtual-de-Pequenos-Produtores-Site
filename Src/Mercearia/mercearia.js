@@ -1,37 +1,14 @@
-// O array 'produtos' já está carregado na memória pelo global-Produtos.js!
-
-// 1. Lógica de perfil/usuário
-let usuarioLogado = null;
-try {
-    usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
-} catch (e) {
-    console.error("Erro ao ler dados do usuário no localStorage", e);
-}
-
-// Define de quem é o carrinho (Arthur, outro usuário ou visitante)
+const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
 const chaveCart = usuarioLogado ? `carrinho_${usuarioLogado.email}` : "carrinho_visitante";
 
-// 2. Função principal de inicialização da página
-function iniciarPagina() {
-    console.log("Iniciando montagem da vitrine de Artesanato...");
-    
+document.addEventListener("DOMContentLoaded", () => {
     const vitrine = document.getElementById("vitrine-produtos");
     const campoBusca = document.getElementById("campo-busca");
     const filtroCategoria = document.getElementById("filtroCategoria");
     const ordenarPreco = document.getElementById("ordenarPreco");
 
-    if (!vitrine) {
-        console.error("ERRO: Div 'vitrine-produtos' não encontrada no HTML!");
-        return;
-    }
-
-    // Função que desenha os cards
+    // Função que desenha os cards na tela
     function renderizar(lista) {
-        if (lista.length === 0) {
-            vitrine.innerHTML = "<p style='text-align:center; padding: 20px; width: 100%;'>Nenhum produto encontrado nesta categoria.</p>";
-            return;
-        }
-
         vitrine.innerHTML = lista.map(p => `
             <div class="card">
                 <img src="${p.img}" alt="${p.name}">
@@ -42,45 +19,38 @@ function iniciarPagina() {
         `).join('');
     }
 
-    // Função que filtra e ordena os dados globais
+    // Função que filtra os produtos
     function filtrar() {
         const termo = campoBusca.value.toLowerCase();
         const cat = filtroCategoria.value;
         const ordem = ordenarPreco.value;
 
-        // Filtra o array 'produtos' (que vem do global-Produtos.js)
+        // Filtra por Categoria e Texto
         let resultado = produtos.filter(p => 
             (cat === "Todos" || p.category.toLowerCase() === cat.toLowerCase()) &&
             p.name.toLowerCase().includes(termo)
         );
 
+        // Ordena por Preço
         if (ordem === "menor") resultado.sort((a,b) => a.price - b.price);
         if (ordem === "maior") resultado.sort((a,b) => b.price - a.price);
 
         renderizar(resultado);
     }
 
-    // Adiciona os "escutadores" de eventos nos filtros
+    // Ouve as mudanças nos filtros
     campoBusca.addEventListener("input", filtrar);
     filtroCategoria.addEventListener("change", filtrar);
     ordenarPreco.addEventListener("change", filtrar);
 
-    // INICIA EXIBINDO APENAS ARTESANATO
-    // O seu HTML do artesanato precisa ter a <option value="artesanato" selected> 
-    filtrar(); 
+    // IMPORTANTE: Ao abrir a página de Mercearia, exibe apenas produtos de Mercearia
+    renderizar(produtos.filter(p => p.category.toLowerCase() === "mercearia"));
+    
     atualizarMiniCart();
-}
+});
 
-// Garante que o código só rode após o HTML estar carregado
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", iniciarPagina);
-} else {
-    iniciarPagina();
-}
-
-// 3. Funções do Mini-Carrinho Lateral
+// Adiciona ao carrinho do usuário correto
 window.adicionarAoCart = (id) => {
-    // Puxa do banco de dados global
     const prod = produtos.find(p => p.id === id);
     let cart = JSON.parse(localStorage.getItem(chaveCart)) || [];
     const index = cart.findIndex(i => i.id === id);
@@ -92,11 +62,10 @@ window.adicionarAoCart = (id) => {
     atualizarMiniCart();
 };
 
-window.atualizarMiniCart = () => {
+// Atualiza a barra lateral direita
+function atualizarMiniCart() {
     const lista = document.getElementById("mini-lista-carrinho");
     const totalMsg = document.getElementById("total-mini");
-    if(!lista || !totalMsg) return;
-
     const cart = JSON.parse(localStorage.getItem(chaveCart)) || [];
     let total = 0;
     
@@ -106,4 +75,4 @@ window.atualizarMiniCart = () => {
     }).join('');
     
     totalMsg.innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
-};
+}
