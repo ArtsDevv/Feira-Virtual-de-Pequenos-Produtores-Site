@@ -1,27 +1,15 @@
-// O array 'produtos' já está carregado na memória pelo global-Produtos.js!
-
-// 1. Lógica de perfil/usuário
-let usuarioLogado = null;
-try {
-    usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
-} catch (e) {
-    console.error("Erro ao ler dados do usuário no localStorage", e);
-}
-
-// Define de quem é o carrinho (Arthur, outro usuário ou visitante)
+// Verifica quem está logado para usar a chave correta no carrinho
+const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
 const chaveCart = usuarioLogado ? `carrinho_${usuarioLogado.email}` : "carrinho_visitante";
 
-// 2. Função principal de inicialização da página
-function iniciarPagina() {
-    console.log("Iniciando montagem da vitrine de Artesanato...");
-    
+document.addEventListener("DOMContentLoaded", () => {
     const vitrine = document.getElementById("vitrine-produtos");
     const campoBusca = document.getElementById("campo-busca");
     const filtroCategoria = document.getElementById("filtroCategoria");
     const ordenarPreco = document.getElementById("ordenarPreco");
 
     if (!vitrine) {
-        console.error("ERRO: Div 'vitrine-produtos' não encontrada no HTML!");
+        console.error("ERRO: Div 'vitrine-produtos' não encontrada!");
         return;
     }
 
@@ -48,7 +36,7 @@ function iniciarPagina() {
         const cat = filtroCategoria.value;
         const ordem = ordenarPreco.value;
 
-        // Filtra o array 'produtos' (que vem do global-Produtos.js)
+        // Aqui voltamos a usar "produtos" para bater com o seu global-Produtos.js
         let resultado = produtos.filter(p => 
             (cat === "Todos" || p.category.toLowerCase() === cat.toLowerCase()) &&
             p.name.toLowerCase().includes(termo)
@@ -66,27 +54,23 @@ function iniciarPagina() {
     ordenarPreco.addEventListener("change", filtrar);
 
     // INICIA EXIBINDO APENAS ARTESANATO
-    // O seu HTML do artesanato precisa ter a <option value="artesanato" selected> 
-    filtrar(); 
+    renderizar(produtos.filter(p => p.category.toLowerCase() === "artesanato")); 
     atualizarMiniCart();
-}
+});
 
-// Garante que o código só rode após o HTML estar carregado
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", iniciarPagina);
-} else {
-    iniciarPagina();
-}
-
-// 3. Funções do Mini-Carrinho Lateral
+// Funções do Mini-Carrinho Lateral
 window.adicionarAoCart = (id) => {
-    // Puxa do banco de dados global
+    // Aqui voltamos a usar "produtos" também
     const prod = produtos.find(p => p.id === id);
+    
     let cart = JSON.parse(localStorage.getItem(chaveCart)) || [];
     const index = cart.findIndex(i => i.id === id);
     
-    if(index > -1) cart[index].qtd += 1;
-    else cart.push({...prod, qtd: 1});
+    if(index > -1) {
+        cart[index].qtd += 1;
+    } else {
+        cart.push({...prod, qtd: 1});
+    }
     
     localStorage.setItem(chaveCart, JSON.stringify(cart));
     atualizarMiniCart();
