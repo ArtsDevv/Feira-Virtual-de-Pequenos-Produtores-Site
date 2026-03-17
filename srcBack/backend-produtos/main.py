@@ -3,8 +3,13 @@ from fastapi import FastAPI
 from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-senha = urllib.parse.quote_plus("SUA_SENHA_AQUI") 
-URL_BANCO_DADOS = f"mysql+pymysql://root:{senha}@localhost:3306/feira_virtual"
+# 1. Configurando a conexão
+# Coloque sua senha real entre as aspas abaixo
+minha_senha_real = "arth03092002@" 
+senha_codificada = urllib.parse.quote_plus(minha_senha_real)
+
+# ATENÇÃO: Verifique se a linha abaixo tem o 'f' no início e apenas UM '@' antes do 127.0.0.1
+URL_BANCO_DADOS = f"mysql+pymysql://root:{senha_codificada}@127.0.0.1:3306/feira_virtual"
 
 engine = create_engine(URL_BANCO_DADOS)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
