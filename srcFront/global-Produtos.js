@@ -1,65 +1,40 @@
-const produtosEstaticos = [
-    { id: '1', name: 'Pêssego', category: 'hortifruti', price: 4.00, img: '../assets/Pessego.jpg', desc: 'Pêssego.' },
-    { id: '2', name: 'Pêra', category: 'hortifruti', price: 2.00, img: '../assets/pera.jpg', desc: 'Pera.' },
-    { id: '3', name: 'Uva', category: 'hortifruti', price: 3.00, img: '../assets/uva.jpg', desc: 'Uva.' },
-    { id: '4', name: 'Pera', category: 'hortifruti', price: 3.00, img: '../assets/pera.jpg', desc: 'Pera.' },
-    { id: '5', name: 'Caju', category: 'hortifruti', price: 3.00, img: '../assets/caju.jpg', desc: 'Caju.' },
-    { id: '6', name: 'Limão', category: 'hortifruti', price: 0.10, img: '../assets/limao.jpeg', desc: 'Limão.' },
-    { id: '7', name: 'Milho Verde', category: 'hortifruti', price: 0.80, img: '../assets/corn.png', desc: 'Milho Verde.' },
-    { id: '8', name: 'Goiaba', category: 'hortifruti', price: 3.00, img: '../assets/goiaba.png', desc: 'Goiaba.' },
-    { id: '9', name: 'Banana Prata', category: 'hortifruti', price: 3.00, img: '../assets/banana_prata.jpg', desc: 'Banana Prata.' },
-    { id: '10', name: 'Acerola', category: 'hortifruti', price: 3.80, img: '../assets/acerola.png', desc: 'Acerola.' },
-    { id: '11', name: 'Laranja', category: 'hortifruti', price: 3.00, img: '../assets/laranja.jpeg', desc: 'Laranja.' },
-    { id: '12', name: 'Mamão', category: 'hortifruti', price: 6.00, img: '../assets/mamao.jpg', desc: 'Mamão.' },
-    { id: '13', name: 'Doce de Leite Caseiro', category: 'mercearia', price: 15.00, img: '../assets/pagina-padrao/Pagina-Mercearia/doce-de-leite1.jpg', desc: '.' },
-    { id: '14', name: 'Doce de Leite Cremoso', category: 'mercearia', price: 11.00, img: '../assets/pagina-padrao/Pagina-Mercearia/doce-de-leite2.jpg', desc: '.' },
-    { id: '15', name: 'Doce de Leite no Pote', category: 'mercearia', price: 13.50, img: '../assets/pagina-padrao/Pagina-Mercearia/doce-de-leite.jpg', desc: '.' },
-    { id: '16', name: 'Doce de Leite dos deuses', category: 'mercearia', price: 11.00, img: '../assets/pagina-padrao/Pagina-Mercearia/doce-de-leite3.jpg', desc: '.' },
-    { id: '17', name: 'Manteiga Fresca', category: 'mercearia', price: 11.50, img: '../assets/pagina-padrao/Pagina-Mercearia/manteiga.jpg', desc: '.' },
-    { id: '18', name: 'Manteiga Cremosa', category: 'mercearia', price: 9.50, img: '../assets/pagina-padrao/Pagina-Mercearia/manteiga-cremosa.jpg', desc: '.' },
-    { id: '19', name: 'Manteiga em Cubo', category: 'mercearia', price: 14.00, img: '../assets/pagina-padrao/Pagina-Mercearia/manteiga-em-cubo.jpg', desc: '.' },
-    { id: '20', name: 'Manteiga Caseira', category: 'mercearia', price: 8.50, img: '../assets/pagina-padrao/Pagina-Mercearia/manteiga1.jpg', desc: '.' },
-    { id: '21', name: 'Pão Caseiro', category: 'mercearia', price: 10.00, img: '../assets/pagina-padrao/Pagina-Mercearia/pao-caseiro.jpg', desc: '.' },
-    { id: '22', name: 'Pão Salgado', category: 'mercearia', price: 15.50, img: '../assets/pagina-padrao/Pagina-Mercearia/pao-caseiro1.jpg', desc: '.' }, 
-    { id: '23', name: 'Pão Doce', category: 'mercearia', price: 8.50, img: '../assets/pagina-padrao/Pagina-Mercearia/pao-doce.jpg', desc: '.' },
-    { id: '24', name: 'Pão Doce Cremoso', category: 'mercearia', price: 15.00, img: '../assets/pagina-padrao/Pagina-Mercearia/pao-caseiro2.jpg', desc: '.' },
-    { id: '25', name: 'Boneca de Pano', category: 'artesanato', price: 28.00, img: '../assets/boneca-de-pano.webp', desc: '.' },
-    { id: '26', name: 'Cesta de Palha', category: 'artesanato', price: 22.00, img: '../assets/cesta-de-palha.jpg', desc: '.' },
-    { id: '27', name: 'Vaso de Cerâmica', category: 'artesanato', price: 18.50, img: '../assets/pagina-padrao/Pagina-Mercearia/pao-caseiro2.jpg', desc: '.' },
-    { id: '28', name: 'Porta Treco', category: 'artesanato', price: 9.00, img: '../assets/porta-treco.webp', desc: '.' },
-    { id: '29', name: 'Jogo de Tecido', category: 'artesanato', price: 15.00, img: '../assets/jogo-americano-em-tecido.webp', desc: '.' },
-    { id: '30', name: 'Caixote para Jardim', category: 'artesanato', price: 25.00, img: '../assets/caixote-para-jardim-vertical.webp', desc: '.' },
-    { id: '31', name: 'Pulseira de Croche', category: 'artesanato', price: 5.00, img: '../assets/pulseira-de-croche.jpg', desc: '.' },
-    { id: '32', name: 'Filtro de Barro', category: 'artesanato', price: 32.00, img: '../assets/filtrodebarro.jpeg', desc: '.' },
-    { id: '33', name: 'Pano de Prato', category: 'artesanato', price: 6.00, img: '../assets/panodeprato.jpg', desc: '.' },
-    { id: '34', name: 'Prateleiro', category: 'artesanato', price: 18.00, img: '../assets/prateleiro.webp', desc: '.' },
-    { id: '35', name: 'Passarinho', category: 'artesanato', price: 5.00, img: '../assets/passarinho.webp', desc: '.' }, 
-    { id: '36', name: 'Mini Tábua de Corte', category: 'artesanato', price: 16.00, img: '../assets/minitabuadecorte.webp', desc: '.' },  
-]
+const API_URL = 'http://127.0.0.1:8000/produtos';
 
-async function buscarProdutosDoBanco() {
+async function carregarProdutosDoBanco() {
+    const container = document.getElementById('container-produtos'); // Ajuste para o seu ID real
+    
     try {
-        const resposta = await fetch('http://127.0.0.1:8000/produtos');
-        if (!resposta.ok) throw new Error("Erro na rede");
-        
-        const produtosVindoDoMySQL = await resposta.json();
-        
-        // Se o banco tiver dados, usamos eles. Se estiver vazio, usamos os estáticos (por enquanto)
-        return produtosVindoDoMySQL.length > 0 ? produtosVindoDoMySQL : produtosEstaticos;
-        
+        const resposta = await fetch(API_URL);
+        const produtos = await resposta.json();
+
+        if (produtos.length === 0) {
+            container.innerHTML = "<p>Nenhum produto encontrado no banco de dados.</p>";
+            return;
+        }
+
+        container.innerHTML = ""; // Limpa o container
+
+        produtos.forEach(produto => {
+            const card = document.createElement('div');
+            card.className = 'produto-card';
+            card.innerHTML = `
+                <img src="${produto.imagem_url}" alt="${produto.nome}">
+                <div class="info">
+                    <h3>${produto.nome}</h3>
+                    <p class="categoria">${produto.categoria}</p>
+                    <p class="descricao">${produto.descricao}</p>
+                    <p class="preco">R$ ${produto.preco.toFixed(2)} / ${produto.unidade_medida}</p>
+                    <button onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao Carrinho</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
     } catch (erro) {
-        console.warn("Servidor Python offline. Usando dados estáticos de reserva.");
-        return produtosEstaticos;
+        console.error("Erro ao conectar com o Backend:", erro);
+        container.innerHTML = "<p>O servidor está offline. Tente novamente mais tarde.</p>";
     }
 }
 
-// 3. Função para renderizar (ajuste o nome para o que você já usa no seu site)
-async function renderizarProdutos() {
-    const listaFinal = await buscarProdutosDoBanco();
-    
-    // Aqui vai o seu código que já existe para criar os cards na tela
-    // usando a variável 'listaFinal'
-    console.log("Produtos carregados:", listaFinal);
-}
-
-renderizarProdutos();
+// Inicia a busca assim que a página é carregada
+document.addEventListener('DOMContentLoaded', carregarProdutosDoBanco);
