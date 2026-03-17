@@ -9,37 +9,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const form = document.getElementById('form-cadastro-produto');
 
-    // Pega o valor digitado e troca vírgula por ponto para o JS entender a matemática
-        let precoDigitado = document.getElementById('prod-preco').value;
-        let precoFormatado = precoDigitado.replace(',', '.');
-
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-// 1. Captura os dados
+        // 1. Captura e formata o preço (trocando vírgula por ponto)
+        let precoDigitado = document.getElementById('prod-preco').value;
+        let precoFormatado = parseFloat(precoDigitado.replace(',', '.'));
+
+        // 2. Monta o objeto com os nomes EXATOS que o seu Python espera
         const novoProduto = {
-            id: Date.now().toString(), // Gera um ID único baseado no tempo
-            name: document.getElementById('prod-nome').value,
-            category: document.getElementById('prod-categoria').value,
-            price: parseFloat(precoFormatado), // Usa a variável formatada aqui!
-            unidade: document.getElementById('prod-unidade').value,
-            desc: document.getElementById('prod-desc').value,
-            img: document.getElementById('prod-img').value || '../assets/default-product.jpg',
-            emailProdutor: usuarioLogado.email,
-            dataCadastro: new Date().toLocaleDateString()
+            nome: document.getElementById('prod-nome').value,
+            categoria: document.getElementById('prod-categoria').value,
+            preco: precoFormatado,
+            unidade_medida: document.getElementById('prod-unidade').value,
+            descricao: document.getElementById('prod-desc').value,
+            imagem_url: document.getElementById('prod-img').value || '../assets/default-product.jpg'
         };
 
-        // 2. Salva no banco de dados específico deste produtor
-        const chaveProdutos = `produtos_produtor_${usuarioLogado.email}`;
-        let meusProdutos = JSON.parse(localStorage.getItem(chaveProdutos)) || [];
-        
-        meusProdutos.push(novoProduto);
-        localStorage.setItem(chaveProdutos, JSON.stringify(meusProdutos));
+        try {
+            // 3. Envia para o Backend (Python + MySQL)
+            const resposta = await fetch('http://127.0.0.1:8000/produtos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(novoProduto)
+            });
 
-        // 3. Feedback e Limpeza
-        alert(`Sucesso! O produto "${novoProduto.name}" foi cadastrado.`);
-        form.reset();
-        
-        window.location.href = "../Configuracoes_produtor/Configuracoes_Produtor.html";
+            if (resposta.ok) {
+                // 4. Feedback e Redirecionamento após o sucesso
+                alert(`Sucesso! O produto "${novoProduto.nome}" está agora no MySQL.`);
+                form.reset();
+                window.location.href = "../Configuracoes_produtor/Configuracoes_Produtor.html";
+            } else {
+                const erro = await resposta.json();
+                alert("Erro ao cadastrar: " + (erro.detail || "Verifique os dados."));
+            }
+
+        } catch (erro) {
+            console.error("Falha na conexão com o servidor:", erro);
+            alert("O servidor Python está desligado! Ligue o Uvicorn para cadastrar.");
+        }
     });
 });
