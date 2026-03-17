@@ -40,6 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(`Sucesso! O produto "${novoProduto.name}" foi cadastrado.`);
         form.reset();
         
-        window.location.href = "./Configuracoes_produtor.html";
+        window.location.href = "../Configuracoes_produtor/Configuracoes_Produtor.html";
     });
 });
