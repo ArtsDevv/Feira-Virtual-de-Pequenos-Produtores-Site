@@ -1,75 +1,90 @@
-// Verifica quem está logado para usar a chave correta no carrinho
 const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
 const chaveCart = usuarioLogado ? `carrinho_${usuarioLogado.email}` : "carrinho_visitante";
 
-document.addEventListener("DOMContentLoaded", () => {
+// Variável global para guardar os produtos que virão do banco
+let produtosBanco = [];
+
+document.addEventListener("DOMContentLoaded", async () => {
     const vitrine = document.getElementById("vitrine-produtos");
     const campoBusca = document.getElementById("campo-busca");
     const filtroCategoria = document.getElementById("filtroCategoria");
     const ordenarPreco = document.getElementById("ordenarPreco");
 
-    if (!vitrine) {
-        console.error("ERRO: Div 'vitrine-produtos' não encontrada!");
+    // 1. BUSCAR DADOS DO BACKEND (PYTHON)
+    try {
+        const resposta = await fetch('http://127.0.0.1:8000/produtos');
+        produtosBanco = await resposta.json();
+        console.log("Produtos carregados do banco:", produtosBanco);
+    } catch (erro) {
+        console.error("Erro ao buscar produtos:", erro);
+        vitrine.innerHTML = "<p>Erro ao conectar com o servidor.</p>";
         return;
     }
 
-    // Função que desenha os cards
+    // 2. FUNÇÃO DE RENDERIZAR (Atualizada com nomes em português)
     function renderizar(lista) {
         if (lista.length === 0) {
-            vitrine.innerHTML = "<p style='text-align:center; padding: 20px; width: 100%;'>Nenhum produto encontrado nesta categoria.</p>";
+            vitrine.innerHTML = "<p style='text-align:center; padding: 20px; width: 100%;'>Nenhum produto encontrado.</p>";
             return;
         }
 
         vitrine.innerHTML = lista.map(p => `
             <div class="card">
-                <img src="${p.img}" alt="${p.name}">
-                <p>${p.name}</p>
-                <p class="preco">R$ ${p.price.toFixed(2).replace('.',',')}</p>
-                <button class="btn-carrinho" onclick="adicionarAoCart('${p.id}')">Adicionar</button>
+                <img src="${p.imagem_url}" alt="${p.nome}">
+                <p>${p.nome}</p>
+                <p class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</p>
+                <button class="btn-carrinho" onclick="adicionarAoCart(${p.id})">Adicionar</button>
             </div>
         `).join('');
     }
 
-    // Função que filtra e ordena os dados globais
+    // 3. FUNÇÃO DE FILTRAR (Ajustada para o banco)
     function filtrar() {
         const termo = campoBusca.value.toLowerCase();
-        const cat = filtroCategoria.value;
+        const cat = filtroCategoria.value; // "artesanato", "hortifruti", etc.
         const ordem = ordenarPreco.value;
 
-        // Aqui voltamos a usar "produtos" para bater com o seu global-Produtos.js
-        let resultado = produtos.filter(p => 
-            (cat === "Todos" || p.category.toLowerCase() === cat.toLowerCase()) &&
-            p.name.toLowerCase().includes(termo)
+        let resultado = produtosBanco.filter(p => 
+            (cat === "Todos" || p.categoria.toLowerCase() === cat.toLowerCase()) &&
+            p.nome.toLowerCase().includes(termo)
         );
 
-        if (ordem === "menor") resultado.sort((a,b) => a.price - b.price);
-        if (ordem === "maior") resultado.sort((a,b) => b.price - a.price);
+        if (ordem === "menor") resultado.sort((a,b) => a.preco - b.preco);
+        if (ordem === "maior") resultado.sort((a,b) => b.preco - a.preco);
 
         renderizar(resultado);
     }
 
-    // Adiciona os "escutadores" de eventos nos filtros
+    // Escutadores de eventos
     campoBusca.addEventListener("input", filtrar);
     filtroCategoria.addEventListener("change", filtrar);
     ordenarPreco.addEventListener("change", filtrar);
 
     // INICIA EXIBINDO APENAS ARTESANATO
-    renderizar(produtos.filter(p => p.category.toLowerCase() === "artesanato")); 
+    const apenasArtesanato = produtosBanco.filter(p => p.categoria.toLowerCase() === "artesanato");
+    renderizar(apenasArtesanato);
+    
     atualizarMiniCart();
 });
 
-// Funções do Mini-Carrinho Lateral
+// 4. FUNÇÃO DO CARRINHO (Ajustada para os novos nomes)
 window.adicionarAoCart = (id) => {
-    // Aqui voltamos a usar "produtos" também
-    const prod = produtos.find(p => p.id === id);
+    const prod = produtosBanco.find(p => p.id == id); // Usamos == porque o ID do banco é número e o do clique pode vir como string
     
     let cart = JSON.parse(localStorage.getItem(chaveCart)) || [];
-    const index = cart.findIndex(i => i.id === id);
+    const index = cart.findIndex(i => i.id == id);
     
     if(index > -1) {
         cart[index].qtd += 1;
     } else {
-        cart.push({...prod, qtd: 1});
+        // Criamos o objeto do carrinho com os nomes que o resto do seu sistema (carrinho.html) já espera
+        cart.push({
+            id: prod.id,
+            name: prod.nome,
+            price: prod.preco,
+            img: prod.imagem_url,
+            qtd: 1
+        });
     }
     
     localStorage.setItem(chaveCart, JSON.stringify(cart));
