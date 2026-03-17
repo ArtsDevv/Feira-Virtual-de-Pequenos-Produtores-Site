@@ -9,15 +9,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const form = document.getElementById('form-cadastro-produto');
 
+    // Pega o valor digitado e troca vírgula por ponto para o JS entender a matemática
+        let precoDigitado = document.getElementById('prod-preco').value;
+        let precoFormatado = precoDigitado.replace(',', '.');
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // 1. Captura os dados
+    // 1. Captura os dados
         const novoProduto = {
             id: Date.now().toString(), // Gera um ID único baseado no tempo
             name: document.getElementById('prod-nome').value,
             category: document.getElementById('prod-categoria').value,
-            price: parseFloat(document.getElementById('prod-preco').value),
+            price: parseFloat(precoFormatado), // Usa a variável formatada aqui!
             unidade: document.getElementById('prod-unidade').value,
             desc: document.getElementById('prod-desc').value,
             img: document.getElementById('prod-img').value || '../assets/default-product.jpg',
