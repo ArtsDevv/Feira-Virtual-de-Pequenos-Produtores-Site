@@ -1,134 +1,126 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<meta charset="UTF-8">
-
+<html lang="pt-BR">
 <head>
-    <title>Feira Virtual - Tela Sobre o Produtor</title>
-    <meta name="Desenvolvedor" content="Arthur Lobo">
-    <meta name="Descrição" content="Página do Produtor com suas respectivas informações.">
-    <meta name="palavras chaves" content="Feira Virtual, Produtor, Vendedor, Sobre, Infos, informações">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=2.0">
+    <meta charset="UTF-8">
+    <title>Ana Maria - Feira Virtual</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conheça Ana Maria, produtora da pecuária em Campo Grande - MT. Apoie a agricultura familiar na Feira Virtual.">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../style_global.css">
+    <link rel="stylesheet" href="./style.css">
+
+    <script src="../header.js" defer></script>
 </head>
-
 <body> 
-
     <header>
-        <div class="container header-content">       
-            <div class="logo">
-                <img src="PNG/logoFV.png" alt="Logo Feira Virtual">
-                <div>
-                    
+        <div class="container header-content">
+            <a href="../index.html" class="logo">
+                <img src="../assets/image_logo.jpeg" alt="Logo Feira Virtual">
+                <div class="logo-text">
                     <h1>Feira Virtual</h1>
-                    <span>Alimentos Frescos</span>
+                    <p>Alimentos Frescos</p>
                 </div>
-            </div>
-            <nav class="header-nav">
-                <a href="../Acesse a sua conta/Acesse a sua conta.html"><img src="PNG/perfil.png" alt="Perfil" class="icone-cabecalho"></a>
-                <a href="#"><img src="PNG/localização.png" alt="Localização" class="icone-cabecalho"></a>
+            </a>
+            
+            <nav class="icons" aria-label="Navegação de atalhos">
+                <a href="../Acesse a sua conta/Acesseasuaconta.html" class="icon-link" title="Acesse sua conta" id="link-conta">
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </a>
+                <a href="https://maps.google.com" target="_blank" class="icon-link" title="Localização">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                </a>
+                <a href="../carrinho/carrinho.html" class="icon-link" title="Carrinho">
+                    <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                </a>
             </nav>
         </div>
     </header>
 
-        <section class="bannerP">
-            <div class="container">
-            <a href="#"><img src="PNG/bannerf.png" alt="Banner Principal"></a>
-            </div>
+    <main class="container page-spacing">
+        <section class="banner-produtor">
+            <img src="PNG/bannera.png" alt="Propriedade de Ana Maria">
         </section>
 
-    <main class="container">
-        <form id="about" action="#" method="post">
-            
-            <div class="about-section">
-                <h2>Fazenda Oliveira</h2>
-                <p class="Localização"> Rio Verde - GO</p>
+        <section class="info-produtor">
+            <h2>Ana Maria</h2>
+            <p class="localizacao">Campo Grande - MT</p>
 
-                <h3>Sobre o Produtor:</h3>
-                <p class="Descrição">Em Rio Verde, Goiás, uma das regiões mais prósperas do Brasil na produção de grãos, a Fazenda Oliveira dedica sua história ao cultivo de milho. Trabalhando com técnicas aperfeiçoadas ao longo de gerações, a família combina o conhecimento do campo com práticas modernas e sustentáveis para garantir uma safra de alta produtividade e qualidade.
-Seu cuidado acompanha todo o ciclo: da preparação do solo à colheita, passando pela seleção rigorosa das sementes que darão origem a grãos de sanidade, vigor e valor nutricional característicos da região. O compromisso da Fazenda Oliveira com a terra e com a comunidade local faz de sua lavoura um exemplo de responsabilidade e excelência.
-Ao escolher os produtos da Fazenda Oliveira, você apoia a agricultura familiar e leva para o seu negócio a força da terra do cerrado goiano — símbolo de tradição, fartura e desenvolvimento.</p>
-                         
+            <h3>Sobre a Produtora:</h3>
+            <p class="descricao">
+                Em Campo Grande, Mato Grosso do Sul, uma das regiões mais imponentes da pecuária brasileira, Ana Maria dedica sua vida à criação de gado de alta qualidade. Trabalhando com técnicas de manejo que respeitam o bem-estar animal, ela combina a tradição da vida no campo com práticas modernas e sustentáveis para garantir um rebanho saudável e produtivo.
+                <br><br>
+                Seu cuidado acompanha todo o ciclo: da cria à seleção rigorosa dos animais, resultando em uma produção que preza pela excelência genética e pela procedência garantida. O compromisso de Ana Maria com a preservação do pasto e com a comunidade local faz de sua propriedade um modelo de responsabilidade e eficiência.
+                <br><br>
+                Ao escolher a produção de Ana Maria, você apoia a produtora rural e leva para o seu negócio a força da pecuária do Centro-Oeste — símbolo de qualidade, rusticidade e sabor autêntico.
+            </p>
+        </section>
+
+        <section class="outros-produtores">
             <h3>Outros Produtores:</h3>
             <div class="grid-outros">
                 
-                <div class="produtor-card">
-                    <a href="../Sobre_Produtor_MariaBraga/index.html">
-                        <img src="PNG/profilem.png" alt="Maria Braga">
-                        <h4 class="op-titulo">Maria Braga</h4>
-                        <p class="tipo">Grãos</p>
-                    </a>
-                </div>
+                <a href="../Sobre_Produtor_MariaBraga/index.html" class="produtor-card">
+                    <img src="PNG/profilem.png" alt="Maria Braga">
+                    <h4 class="op-titulo">Maria Braga</h4>
+                    <p class="tipo">Grãos</p>
+                </a>
 
-                <div class="produtor-card">
-                    <a href="../Sobre_Produtor_JoséPereira/index.html">
-                        <img src="PNG/jose.png" alt="José Pereira">
-                        <h4 class="op-titulo">José Pereira</h4>
-                        <p class="tipo">Café</p>
-                    </a>
-                </div>
+                <a href="../Sobre_Produtor_JosePereira/index.html" class="produtor-card">
+                    <img src="PNG/jose.png" alt="José Pereira">
+                    <h4 class="op-titulo">José Pereira</h4>
+                    <p class="tipo">Café</p>
+                </a>
 
-                <div class="produtor-card">
-                    <a href="../Sobre_Produtor_EliseuSouza/index.html">
-                        <img src="PNG/elizeu.png" alt="Elizeu Souza">
-                        <h4 class="op-titulo">Eliseu Souza</h4>
-                        <p class="tipo">Açúcar e álcool</p>
-                    </a>
-                </div>
+                <a href="../Sobre_Produtor_EliseuSouza/index.html" class="produtor-card">
+                    <img src="PNG/elizeu.png" alt="Eliseu Souza">
+                    <h4 class="op-titulo">Eliseu Souza</h4>
+                    <p class="tipo">Açúcar e Álcool</p>
+                </a>
 
-                <div class="produtor-card">
-                    <a href="../Sobre_Produtor_AnaMaria/index.html"> 
-                            <img src="PNG/ana.png" alt="Ana Maria">
-                            <h4 class="op-titulo">Ana Maria</h4>
-                             <p class="tipo">Pecuária</p>
-                    </a>  
-                </div>
+                <a href="../Sobre_Produtor_FazendaOliveira/index.html" class="produtor-card">
+                    <img src="PNG/oliveira.png" alt="Fazenda Oliveira">
+                    <h4 class="op-titulo">Fazenda Oliveira</h4>
+                    <p class="tipo">Agricultura</p>
+                </a>
         
-            </div>               
-        </form>
+            </div>              
+        </section>
     </main>
-
 
     <footer>
         <div class="container footer-content">
-            <div class="footer-col about">
-                <div class="logo">
-                    <img src="PNG/logoFV.png" alt="Logo Feira Virtual">
-                    <h5>Feira Virtual</h5>
+            <div class="footer-col footer-about">
+                <div class="logo-footer">
+                    <img src="../assets/logoFooter.png" alt="Logo">
+                    <h4>Feira Virtual</h4>
                 </div>
                 <p>Conectando você a pequenos produtores. Compre direto de quem faz, apoie o pequeno produtor.</p>
-                <h4>Nossas redes:</h4>
-                <div class="social-icons">
-                    <a href="#"><img src="PNG/facelogo.png" alt="Facebook"></a>
-                    <a href="#"><img src="PNG/wpplogo.png" alt="Website"></a>
-                    <a href="#"><img src="PNG/instalogo.png" alt="Instagram"></a>
-                </div>
             </div>
-
-            <div class="footer-col navigation">
-                <h6>Navegação:</h6>
-                <ul>
-                    <li><a href="../index.html">Página Inicial</a></li>
-                    <li><a href="../produtores/produtores.html">Conheça nossos produtores</a></li>
-                    <li><a href="#">Categorias</a></li>
-                    <li><a href="#">Novidades</a></li>
-                </ul>
+            <div class="footer-col">
+                <h4>Navegação</h4>
+                <nav aria-label="Menu de Navegação do Rodapé">
+                    <ul>
+                        <li><a href="../index.html">Página Inicial</a></li>
+                        <li><a href="../produtores/produtores.html">Produtores</a></li>
+                        <li><a href="../Hortifruti/hortifruti.html">Categorias</a></li>
+                    </ul>
+                </nav>
             </div>
-
-            <div class="footer-col support">
-                <h6>Informações e suporte:</h6>
-                <ul>
-                    <li><a href="#">Fale Conosco</a></li>
-                    <li><a href="PDF/TERMOS.pdf">Termos de Uso</a></li>
-                    <li><a href="PDF/PRIVACIDADE.pdf">Política de Privacidade</a></li>
-                    <li><a href="PDF/FAQ.pdf">Perguntas Frequentes (FAQ)</a></li>
-                </ul>
+            <div class="footer-col">
+                <h4>Suporte</h4>
+                <nav aria-label="Menu de Suporte e Políticas">
+                    <ul>
+                        <li><a href="../assets/PDF/FAQ.pdf" target="_blank">Fale Conosco</a></li>
+                        <li><a href="../assets/PDF/TERMOS.pdf" target="_blank">Termos de Uso</a></li>
+                        <li><a href="../assets/PDF/PRIVACIDADE.pdf" target="_blank">Política de Privacidade</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </footer>
-
 </body>
 </html>
