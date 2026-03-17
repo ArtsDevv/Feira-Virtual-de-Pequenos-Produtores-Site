@@ -14,12 +14,12 @@ class Produto(Base):
     __tablename__ = "produtos" 
 
     id = Column(Integer, primary_key=True, index=True)
-    nome = Column(String, index=True)
-    categoria = Column(String)
+    nome = Column(String(100), index=True)
+    categoria = Column(String(50))
     preco = Column(Float)
-    unidade_medida = Column(String)
-    descricao = Column(String)
-    imagem_url = Column(String)
+    unidade_medida = Column(String(20))
+    descricao = Column(String(500))
+    imagem_url = Column(String(255))
 
 Base.metadata.create_all(bind=engine)
 
