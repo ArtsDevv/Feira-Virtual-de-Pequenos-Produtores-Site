@@ -1,7 +1,7 @@
 import urllib.parse
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy import create_engine, Column, Integer, String, Float
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from pydantic import BaseModel
 
 minha_senha_real = "arth03092002@" 
@@ -29,11 +29,34 @@ class ProdutoCreate(BaseModel):
     unidade_medida: str
     descricao: str
 
-# Cria a tabela de verdade no MySQL
+
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="API Feira Virtual - Produtos")
+app = FastAPI(title="API Feira Virtual")
 
-@app.get("/")
-def home():
-    return {"status": "Online", "database": "Conectado ao MySQL"}
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@app.get("/produtos")
+def listar_produtos(db: Session = Depends(get_db)):
+    produtos = db.query(Produto).all()
+    return produtos
+
+@app.post("/produtos")
+def criar_produto(produto: ProdutoCreate, db: Session = Depends(get_db)):
+    novo_produto = Produto(
+        nome=produto.nome,
+        categoria=produto.categoria,
+        preco=produto.preco,
+        unidade_medida=produto.unidade_medida,
+        descricao=produto.descricao
+    )
+    db.add(novo_produto)
+    db.commit() 
+    db.refresh(novo_produto) 
+    return {"mensagem": "Produto cadastrado com sucesso!", "produto": novo_produto}
