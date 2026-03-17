@@ -34,6 +34,13 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="API Feira Virtual")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # Permite que qualquer site acesse (ideal para desenvolvimento)
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 def get_db():
     db = SessionLocal()
     try:
@@ -60,3 +67,4 @@ def criar_produto(produto: ProdutoCreate, db: Session = Depends(get_db)):
     db.commit() 
     db.refresh(novo_produto) 
     return {"mensagem": "Produto cadastrado com sucesso!", "produto": novo_produto}
+
