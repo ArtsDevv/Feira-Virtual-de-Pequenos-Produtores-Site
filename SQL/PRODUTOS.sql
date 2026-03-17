@@ -1,0 +1,1 @@
+SELECT * FROM feira_virtual.produtos;
