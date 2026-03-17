@@ -1,4 +1,4 @@
-const produtos = [
+const produtosEstaticos = [
     { id: '1', name: 'Pêssego', category: 'hortifruti', price: 4.00, img: '../assets/Pessego.jpg', desc: 'Pêssego.' },
     { id: '2', name: 'Pêra', category: 'hortifruti', price: 2.00, img: '../assets/pera.jpg', desc: 'Pera.' },
     { id: '3', name: 'Uva', category: 'hortifruti', price: 3.00, img: '../assets/uva.jpg', desc: 'Uva.' },
@@ -36,3 +36,30 @@ const produtos = [
     { id: '35', name: 'Passarinho', category: 'artesanato', price: 5.00, img: '../assets/passarinho.webp', desc: '.' }, 
     { id: '36', name: 'Mini Tábua de Corte', category: 'artesanato', price: 16.00, img: '../assets/minitabuadecorte.webp', desc: '.' },  
 ]
+
+async function buscarProdutosDoBanco() {
+    try {
+        const resposta = await fetch('http://127.0.0.1:8000/produtos');
+        if (!resposta.ok) throw new Error("Erro na rede");
+        
+        const produtosVindoDoMySQL = await resposta.json();
+        
+        // Se o banco tiver dados, usamos eles. Se estiver vazio, usamos os estáticos (por enquanto)
+        return produtosVindoDoMySQL.length > 0 ? produtosVindoDoMySQL : produtosEstaticos;
+        
+    } catch (erro) {
+        console.warn("Servidor Python offline. Usando dados estáticos de reserva.");
+        return produtosEstaticos;
+    }
+}
+
+// 3. Função para renderizar (ajuste o nome para o que você já usa no seu site)
+async function renderizarProdutos() {
+    const listaFinal = await buscarProdutosDoBanco();
+    
+    // Aqui vai o seu código que já existe para criar os cards na tela
+    // usando a variável 'listaFinal'
+    console.log("Produtos carregados:", listaFinal);
+}
+
+renderizarProdutos();
