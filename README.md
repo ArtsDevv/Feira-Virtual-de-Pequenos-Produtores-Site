@@ -1,6 +1,6 @@
 # 🚜 Feira Virtual de Pequenos Produtores
 
-![Status do Projeto](https://img.shields.io/badge/Status-Em_Desenvolvimento-yellow) ![Tech](https://img.shields.io/badge/Tech-React%20%7C%20JS%20%7C%20Python%20%7C%20Node.js-blue)
+![Status do Projeto](https://img.shields.io/badge/Status-Em_Desenvolvimento-yellow) ![Tech](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS%20%7C%20Python%20%7C%20Node.js-blue)
 
 ## 📖 Sobre o Projeto
 
