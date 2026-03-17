@@ -5,6 +5,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from pydantic import BaseModel
 from typing import List
+from typing import Optional
 
 minha_senha_real = "arth03092002@" 
 senha_codificada = urllib.parse.quote_plus(minha_senha_real)
@@ -30,20 +31,19 @@ class ProdutoBase(BaseModel):
     preco: float
     unidade_medida: str
     descricao: str
-    imagem_url: str
+    imagem_url: Optional[str] = None
 
 class ProdutoResponse(ProdutoBase):
     id: int
     class Config:
         from_attributes = True
 
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI(title="API Feira Virtual")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
