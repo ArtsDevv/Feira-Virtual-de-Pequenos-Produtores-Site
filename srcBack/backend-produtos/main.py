@@ -14,7 +14,6 @@ engine = create_engine(URL_BANCO_DADOS)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# 2. Modelo do Banco de Dados
 class Produto(Base):
     __tablename__ = "produtos"
     id = Column(Integer, primary_key=True, index=True)
@@ -25,7 +24,6 @@ class Produto(Base):
     descricao = Column(String(500))
     imagem_url = Column(String(255))
 
-# 3. Esquemas de Validação (Pydantic)
 class ProdutoBase(BaseModel):
     nome: str
     categoria: str
@@ -39,12 +37,10 @@ class ProdutoResponse(ProdutoBase):
     class Config:
         from_attributes = True
 
-# Criação das tabelas
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="API Feira Virtual")
 
-# Liberando o site para acessar o Backend (CORS)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -59,7 +55,6 @@ def get_db():
     finally:
         db.close()
 
-# --- ROTAS ---
 
 @app.get("/produtos", response_model=List[ProdutoResponse])
 def listar_produtos(db: Session = Depends(get_db)):
