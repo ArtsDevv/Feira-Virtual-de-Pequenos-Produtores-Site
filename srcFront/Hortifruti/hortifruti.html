@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Hortifruti - Feira Virtual</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style_global.css">
+    <link rel="stylesheet" href="../displaycat.css">
+    
+    <script src="../header.js" defer></script>
+    <script src="./hortifruti.js" defer></script>
+    <script src="../global-Produtos.js" defer></script>
+
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="../index.html" class="logo">
+                <img src="../assets/image_logo.jpeg" alt="Logo">
+                <div class="logo-text"><h1>Feira Virtual</h1><p>Alimentos Frescos</p></div>
+            </a>
+            <nav class="icons">
+                <a href="../Acesse a sua conta/Acesseasuaconta.html" class="icon-link" id="link-conta">
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </a>
+                <a href="../carrinho/carrinho.html" class="icon-link">
+                    <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-layout container">
+        <section class="vitrine-area">
+            <div class="barra-filtros">
+                <input type="text" id="campo-busca" placeholder="Buscar por nome..." class="campo-busca">
+                <select id="filtroCategoria" class="select-categoria">
+                    <option value="Todos">Todas as categorias</option>
+                    <option value="hortifruti" selected>Hortifruti</option>
+                    <option value="mercearia">Mercearia</option>
+                    <option value="artesanato">Artesanato</option>
+                </select>
+                <select id="ordenarPreco" class="select-ordenar">
+                    <option value="relevancia">Relevância</option>
+                    <option value="menor">Menor preço</option>
+                    <option value="maior">Maior preço</option>
+                </select>
+            </div>
+            <div id="vitrine-produtos" class="cards-produtos"></div>
+        </section>
+
+        <aside class="sidebar-carrinho">
+            <div class="carrinho-fixed">
+                <h3>Minha Cesta</h3>
+                <div id="mini-lista-carrinho" class="mini-lista"></div>
+                <div class="total-row"><span>Total:</span><strong id="total-mini">R$ 0,00</strong></div>
+                <a href="../carrinho/carrinho.html" class="btn-checkout">Ver Carrinho Completo</a>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-col footer-about">
+                <div class="logo-footer">
+                    <img src="../assets/logoFooter.png" alt="Logo">
+                    <h4>Feira Virtual</h4>
+                </div>
+                <p>Conectando você a pequenos produtores. Compre direto de quem faz, apoie o pequeno produtor.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navegação</h4>
+                <nav aria-label="Menu de Navegação do Rodapé">
+                    <ul>
+                        <li><a href="../index.html">Página Inicial</a></li>
+                        <li><a href="../produtores/produtores.html">Produtores</a></li>
+                        <li><a href="../Hortifruti/hortifruti.html">Categorias</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="footer-col">
+                <h4>Suporte</h4>
+                <nav aria-label="Menu de Suporte e Políticas">
+                    <ul>
+                        <li><a href="../assets/PDF/FAQ.pdf" target="_blank">Fale Conosco</a></li>
+                        <li><a href="../assets/PDF/TERMOS.pdf" target="_blank">Termos de Uso</a></li>
+                        <li><a href="../assets/PDF/PRIVACIDADE.pdf" target="_blank">Política de Privacidade</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
