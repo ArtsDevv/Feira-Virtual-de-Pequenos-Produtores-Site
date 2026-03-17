@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-    // 1. Captura os dados
+// 1. Captura os dados
         const novoProduto = {
             id: Date.now().toString(), // Gera um ID único baseado no tempo
             name: document.getElementById('prod-nome').value,
@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(`Sucesso! O produto "${novoProduto.name}" foi cadastrado.`);
         form.reset();
         
-        // Redireciona de volta para ver o resumo
-        window.location.href = "./Configuracoes_Produtor.html";
+        window.location.href = "./Configuracoes_produtor.html";
     });
 });
