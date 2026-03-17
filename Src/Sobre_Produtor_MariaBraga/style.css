@@ -1,262 +1,110 @@
-/* --- Reset Básico e Estilos Globais --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+/* --- ESTILOS ESPECÍFICOS: PÁGINA SOBRE O PRODUTOR --- */
 
-body {
-    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f8f8f8; /* Fundo cinza claro da página */
-    color: #333;
-    line-height: 1.6;
-}
-
-.container {
-    width: 95%;
-    max-width: 1100px;
-    margin: auto;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-ul {
-    list-style: none;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* --- 1. Cabeçalho --- */
-header {
-    background-color: #8E5E3D;
-    color: #fdfdfd;
-    padding: 1.5rem;
-}
-
-.header-content {
+.page-spacing {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 40px; 
+    padding: 40px 0;
 }
 
-header .logo {
-    display: flex;
-    align-items: center;
-}
-
-header .logo img {
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-    margin-right: 15px;
-}
-
-header h1 {
-    font-size: 48px;
-    font-weight: 400;
-    margin-bottom: -2px;
-    line-height: 100%;
-    font-style: normal;
-    font-family: Gilda Display;
-}
-
-header .logo span {
-    font-size: 16px;
-    font-weight: 400; 
-    font-family: 'Montserrat', sans-serif; 
-    line-height: 100%;
-}
-
-.header-nav {
-    display: flex;       
-    align-items: center;
-}
-
-.header-nav a {
-    margin-left: 20px;
-}
-
-.header-nav img {
-    height: 24px;
-}
-
-.icone-cabecalho {
-    transition: transform 0.2s ease-in-out;
-}
-
-.icone-cabecalho:hover {
-    transform: scale(1.2);
-    cursor: pointer;
-}
-
-/* --- 2. Banner --- */
-
-section .container img {
+/* 1. Banner */
+.banner-produtor img {
     width: 100%;
-    height: 410px;
+    height: 450px;
+    object-fit: cover; 
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-/* --- 3. Seção Principal --- */
-
-main {
-    padding-left: 40px;
-    padding-top: 40px;
+/* 2. Informações Textuais */
+.info-produtor h2 {
+    font-family: 'Gilda Display', serif;
+    font-size: 3rem;
+    color: #2c3e50;
+    margin-bottom: 5px;
 }
 
-.about-section h2 {
-    color: #000;
-    font-family: Gilda Display;
-    font-weight: 400;
-    font-size: 48px;
+.info-produtor .localizacao {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+    font-weight: 500;
 }
 
-.about-section p{
-    color: #000;
-    font-family: montserrat;
-    padding-bottom: 40px;
-    padding-left: 4px;
-    font-size: 17px;
+.info-produtor h3, 
+.outros-produtores h3 {
+    font-family: 'Gilda Display', serif;
+    font-size: 2rem;
+    color: #4a382c; 
+    margin-bottom: 15px;
 }
 
-.about-section h3{
-    font-family: Gilda Display;
-    font-weight: 400;
-    font-size: 32px;
-    padding-bottom: 20px;
-    text-align: left;
+.info-produtor .descricao {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.8; 
+    color: #555;
+    max-width: 1000px;
 }
 
+/* 3. Grid de Outros Produtores */
 .grid-outros {
-    display: flex;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 100px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
 }
 
 .produtor-card {
     text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.produtor-card:hover {
+    transform: translateY(-8px); 
 }
 
 .produtor-card img {
-    width: 230px;
-    height: auto;
+    width: 160px;
+    height: 160px;
     object-fit: cover;
-    margin: 0 auto;
-    border: 3px solid #fff;
-
+    border-radius: 50%; 
+    border: 4px solid #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    transition: box-shadow 0.3s ease;
 }
 
-.grid-outros .op-titulo{
-    font-size: 24px;
-    padding-top: 5px;
+.produtor-card:hover img {
+    box-shadow: 0 8px 25px rgba(163, 107, 62, 0.3); 
 }
 
-.grid-outros .tipo{
-    font-family: montserrat;
-    font-size: 15px;
-    padding-top: 10px;
+.produtor-card .op-titulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.15rem;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 5px;
 }
 
-/* --- 4. Rodapé --- */
-footer {
-    background-color: #ffffff;
-    padding: 3rem 0;
-    border-top: 1px solid #eee;
-    color: #555;
+.produtor-card .tipo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.footer-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 32px;
-}
-
-.footer-col h5{
-    font-family: montserrat;
-    font-size: 25px;
-    color: #4a382c;
-}
-.footer-col h4 {
-    font-size: 20px;
-    color: #4a382c;
-    margin-bottom: 16px;
-    padding-top: 5px;
-}
-
-.footer-col h6 {
-    font-size: 20px;
-    padding-bottom: 20px;
-}
-
-.footer-col.about .logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.footer-col.about .logo img {
-    height: 70px;
-    width: auto;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.footer-col.about .logo h3 {
-    margin: 0;
-}
-
-.footer-col.about p {
-    font-family: montserrat;
-    font-size: 13px;
-    margin-bottom: 16px;
-}
-
-.social-icons a {
-    margin-right: 10px;
-    display: inline-block;
-    margin: 15px;
-}
-
-.social-icons a:hover {
-    cursor: pointer;
-}
-
-.social-icons img {
-    height: 40px;
-}
-
-.footer-col ul li {
-    margin-bottom: 26px;
-}
-
-.footer-col ul li a {
-    font-size: 14.4px;
-    color: #555;
-}
-
-/* --- Responsividade (Mobile) --- */
+/* Responsividade do Banner para Celular */
 @media (max-width: 768px) {
-    .form-grid-personal,
-    .form-grid-production,
-    .footer-content {
-        grid-template-columns: 1fr;
-    }
-
-    .form-grid-production .form-group-right {
-        margin-top: 1.5rem;
-    }
-
-    .footer-content {
-        text-align: center;
-    }
-
-    .footer-col.about .logo {
-        justify-content: center;
+    .banner-produtor img {
+        height: 250px;
     }
 }
