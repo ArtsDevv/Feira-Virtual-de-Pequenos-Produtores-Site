@@ -1,40 +1,43 @@
 const API_URL = 'http://127.0.0.1:8000/produtos';
 
-async function carregarProdutosDoBanco() {
-    const container = document.getElementById('container-produtos'); // Ajuste para o seu ID real
-    
+async function buscarProdutosdaAPI() {
     try {
         const resposta = await fetch(API_URL);
-        const produtos = await resposta.json();
-
-        if (produtos.length === 0) {
-            container.innerHTML = "<p>Nenhum produto encontrado no banco de dados.</p>";
-            return;
+        
+        if (!resposta.ok) {
+            throw new Error('Erro ao buscar dados da API');
         }
 
-        container.innerHTML = ""; // Limpa o container
-
-        produtos.forEach(produto => {
-            const card = document.createElement('div');
-            card.className = 'produto-card';
-            card.innerHTML = `
-                <img src="${produto.imagem_url}" alt="${produto.nome}">
-                <div class="info">
-                    <h3>${produto.nome}</h3>
-                    <p class="categoria">${produto.categoria}</p>
-                    <p class="descricao">${produto.descricao}</p>
-                    <p class="preco">R$ ${produto.preco.toFixed(2)} / ${produto.unidade_medida}</p>
-                    <button onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao Carrinho</button>
-                </div>
-            `;
-            container.appendChild(card);
-        });
+        const produtosDoBanco = await resposta.json();
+        console.log("Dados recebidos do MySQL:", produtosDoBanco);
+        
+        renderizarProdutosNaTela(produtosDoBanco);
 
     } catch (erro) {
-        console.error("Erro ao conectar com o Backend:", erro);
-        container.innerHTML = "<p>O servidor está offline. Tente novamente mais tarde.</p>";
+        console.error("Servidor Offline! Verifique se o Uvicorn está rodando.", erro);
     }
 }
 
-// Inicia a busca assim que a página é carregada
-document.addEventListener('DOMContentLoaded', carregarProdutosDoBanco);
+function renderizarProdutosNaTela(listaDeProdutos) {
+    const container = document.getElementById('container-produtos'); // Use o ID real do seu HTML
+    if (!container) return;
+
+    container.innerHTML = ""; // Limpa o que tiver lá
+
+    listaDeProdutos.forEach(produto => {
+        const card = `
+            <div class="produto-card">
+                <img src="${produto.imagem_url}" alt="${produto.nome}">
+                <div class="produto-info">
+                    <h3>${produto.nome}</h3>
+                    <p class="categoria">${produto.categoria}</p>
+                    <p class="preco">R$ ${produto.preco.toFixed(2)} / ${produto.unidade_medida}</p>
+                    <button onclick="adicionarAoCarrinho(${produto.id})">Adicionar</button>
+                </div>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+}
+
+document.addEventListener('DOMContentLoaded', buscarProdutosdaAPI);
