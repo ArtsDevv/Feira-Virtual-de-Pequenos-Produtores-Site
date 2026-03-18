@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const ordenarPreco = document.getElementById("ordenarPreco");
 
     try {
-        const resposta = await fetch('http://127.0.0.1:8000/produtos');
+        const resposta = await fetch('http://localhost:3000/api/produtos');
         produtosBanco = await resposta.json();
     } catch (erro) {
         console.error("Erro ao buscar produtos:", erro);

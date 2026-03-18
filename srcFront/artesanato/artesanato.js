@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // 1. BUSCAR DADOS DO BACKEND (PYTHON)
     try {
-        const resposta = await fetch('http://127.0.0.1:8000/produtos');
+        const resposta = await fetch('http://localhost:3000/api/produtos');
         produtosBanco = await resposta.json();
         console.log("Produtos carregados do banco:", produtosBanco);
     } catch (erro) {
