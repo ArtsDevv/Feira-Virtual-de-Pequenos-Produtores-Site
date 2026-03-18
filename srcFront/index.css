@@ -112,11 +112,87 @@
     margin-bottom: 20px;
 }
 
-.vitrine-destaques cards-produtos {
+/* --- ESTILOS DA VITRINE DE NOVIDADES --- */
+.vitrine-area {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.container-cards-destaque {
     display: flex; 
     flex-wrap: wrap; 
     gap: 20px; 
     justify-content: center;
+}
+
+.card-destaque {
+    width: 260px; /* Largura fixa impede esmagamento */
+    background: white; 
+    padding: 15px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+    transition: transform 0.2s;
+}
+
+.card-destaque:hover {
+    transform: translateY(-5px); /* Efeitinho legal ao passar o mouse */
+}
+
+.card-destaque img {
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+    border-radius: 8px;
+}
+
+.info-destaque h4 {
+    font-weight: 600; 
+    margin-top: 15px; 
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.tag-categoria {
+    font-size: 0.8rem; 
+    background: #f1f2f6; 
+    color: #57606f; 
+    padding: 4px 10px; 
+    border-radius: 12px; 
+    display: inline-block; 
+    margin-top: 5px; 
+    text-transform: capitalize;
+}
+
+.preco-destaque {
+    color: #27ae60; 
+    font-weight: bold; 
+    font-size: 1.2rem; 
+    margin: 15px 0;
+}
+
+.preco-destaque span {
+    font-size: 0.8rem; 
+    color: #7f8c8d; 
+    font-weight: normal;
+}
+
+.btn-adicionar {
+    width: 100%; 
+    padding: 12px; 
+    background-color: var(--primary-color, #e67e22); 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    color: white; 
+    font-weight: bold; 
+    transition: 0.2s;
+}
+
+.btn-adicionar:hover {
+    filter: brightness(0.9);
 }
 
 /* Ajuste para Celulares */
