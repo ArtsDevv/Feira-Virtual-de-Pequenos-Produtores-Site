@@ -1,36 +1,50 @@
-# 🚜 Feira Virtual de Pequenos Produtores
+# 🛒 Feira Virtual de Pequenos Produtores
 
-![Status do Projeto](https://img.shields.io/badge/Status-Em_Desenvolvimento-yellow) ![Tech](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS%20%7C%20Python%20%7C%20Node.js-blue)
 
-## 📖 Sobre o Projeto
+![Status do Projeto](https://img.shields.io/badge/Status-Em_Desenvolvimento-yellow)
 
-A agricultura familiar gera a maioria dos empregos no campo no Brasil, mas enfrenta barreiras tecnológicas e de acesso ao mercado. A **Feira Virtual** é uma plataforma Full-Stack projetada para eliminar intermediários na cadeia de alimentos, conectar consumidores a alimentos frescos e locais, e oferecer gestão profissional para pequenos produtores (como aviso de colheita e gestão de estoque).
+## 📌 Sobre o Projeto
+A agricultura familiar, principal responsável pelos alimentos no campo no Brasil, enfrenta enormes barreiras de acesso ao mercado e tecnologia. Este projeto, desenvolvido como Trabalho de Conclusão de Curso (TCC), aplica a engenharia de software para gerar **impacto social real**. A plataforma integra uma interface web ágil com uma infraestrutura de back-end robusta e segura. 
 
-Este projeto faz parte de um Trabalho de Conclusão de Curso focado em aplicar a Engenharia de Software para gerar impacto social. A plataforma integra uma interface web ágil e responsiva com uma infraestrutura de back-end robusta, garantindo o processamento seguro de ponta a ponta — desde a visualização da vitrine até a efetivação do pedido no painel do agricultor.
+Logo, este projeto tem como sua estrutura um ecossistema **Full-Stack** projetado para eliminar intermediários na cadeia de alimentos, conectando consumidores a alimentos frescos e locais, além de oferecer gestão profissional para pequenos produtores.
 
-## 📱 Funcionalidades
+---
 
-### 🌐 Front-end (Experiência do Cliente)
-* **Vitrines Dinâmicas e Responsivas:** Páginas categorizadas (Hortifruti, Mercearia e Artesanato) adaptadas para uso fluido em dispositivos móveis e desktops.
-* **Filtros e Busca em Tempo Real:** Sistema de pesquisa por texto e ordenação de preços executados instantaneamente.
-* **Carrinho de Compras Seguro:** Lógica de persistência de sessão e cálculo de frete, atrelando os itens selecionados ao perfil do usuário autenticado.
-* **Dashboard do Usuário:** Painel de controle para visualização de dados cadastrais e status da cesta.
+## ⚙️ Funcionalidades Desenvolvidas:
 
-### ⚙️ Back-end (Gestão e Infraestrutura)
-* **Autenticação e Controle de Acesso:** Sistema de login com validação segura para separar as visões de "Cliente" e "Produtor".
-* **Painel Administrativo do Produtor:** Ambiente exclusivo onde o pequeno agricultor cadastra novos produtos, atualiza disponibilidade e gerencia os pedidos recebidos.
-* **API e Roteamento de Dados:** Comunicação eficiente entre a interface web e o servidor, garantindo atualizações de estoque em tempo real.
-* **Banco de Dados Centralizado:** Armazenamento relacional de todas as entidades do marketplace (usuários, catálogos de produtos e histórico de transações).
+### Front-end (Experiência do Cliente & Produtor)
+* **Design Responsivo e UI/UX:** Layouts focados na conversão e fluidez em dispositivos móveis e desktops (HTML5, CSS3, Flexbox, Grid).
+* **Consumo Dinâmico (Vanilla JS):** Requisições assíncronas nativas (`fetch` API) para renderização de vitrines sem recarregamento de página.
+* **Filtros em Tempo Real:** Sistema de pesquisa e organização de produtos processados instantaneamente através do JavaScript.
+* **Dashboard do Produtor:** Painel interativo para operações de CRUD (Visualização, Cadastro e Exclusão de itens do catálogo).
 
-## 🛠️ Tecnologias Utilizadas
+### Back-end & Infraestrutura (Gestão de Dados)
+* **Java/Spring Boot:** Criação de microsserviços especializados em Java para lidar com o motor de pagamentos (checkout seguro), regras de negócio avançadas e geração de relatórios.
+* **API Gateway (Node.js):** Implementação de um servidor Node.js/Express para atuar como o ponto único de contato (BFF), roteando as requisições para os serviços corretos.
+* **API RESTful (Python/FastAPI):** Comunicação eficiente e tipada entre a interface web e o banco de dados.
+* **Banco de Dados Relacional:** Modelagem de dados centralizada no **MySQL**, garantindo integridade das informações e persistência real dos dados.
+* **Isolamento de Dados & CORS:** Configuração de middleware de segurança para permitir acesso controlado às rotas da API.
 
-**Front-end (Experiência e Interface):**
-* **React:** Componentização, gerenciamento de estado e renderização dinâmica de interfaces (SPA).
-* **JavaScript (ES6+):** Lógica de negócio no lado do cliente e consumo de APIs.
-* **HTML5 & CSS3:** Semântica estrutural, Flexbox/Grid Layout e design responsivo (Mobile First).
+---
 
-**Back-end, Integração & Infraestrutura:**
-* **Node.js & Python:** Lógica de servidor, roteamento e regras de negócio robustas.
-* **JSON:** Formato padrão para estruturação de dados e comunicação ágil (APIs) entre o Front-end e o Back-end.
-* **Banco de Dados:** Armazenamento estruturado (SQL/NoSQL) para produtos, usuários e pedidos.
-* **Git/GitHub:** Versionamento de código e integração.
+## 🛠️ Tecnologias & Ferramentas
+
+<br>
+
+<div align="center">
+  <img src="https://skillicons.dev/icons?i=html" title="HTML5" alt="HTML5" />
+  <img src="https://skillicons.dev/icons?i=css" title="CSS3" alt="CSS3" />
+  <img src="https://skillicons.dev/icons?i=js" title="JavaScript" alt="JavaScript" />
+  <img src="https://skillicons.dev/icons?i=python" title="Python" alt="Python" />
+  <img src="https://skillicons.dev/icons?i=fastapi" title="FastAPI" alt="FastAPI" />
+  <img src="https://skillicons.dev/icons?i=mysql" title="MySQL" alt="MySQL" />
+  <img src="https://skillicons.dev/icons?i=nodejs" title="Node.js" alt="Node.js" />
+  <img src="https://skillicons.dev/icons?i=java" title="Java" alt="Java" />
+  <img src="https://skillicons.dev/icons?i=spring" title="Spring Boot" alt="Spring" />
+  <img src="https://skillicons.dev/icons?i=git" title="Git" alt="Git" />
+  <img src="https://skillicons.dev/icons?i=vscode" title="VS Code" alt="VS Code" />
+</div>
+
+<br>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0052D4,4364F7&height=120&section=footer" width="100%"/>
