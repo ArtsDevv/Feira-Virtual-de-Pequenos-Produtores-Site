@@ -40,4 +40,26 @@ function renderizarProdutosNaTela(listaDeProdutos) {
     });
 }
 
+async function excluirProdutoDoBanco(id) {
+    // Pede uma confirmação para evitar cliques acidentais
+    const confirmacao = confirm("Tem certeza que deseja apagar este produto definitivamente?");
+    
+    if (confirmacao) {
+        try {
+            const resposta = await fetch(`http://127.0.0.1:8000/produtos/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (resposta.ok) {
+                alert("Produto excluído com sucesso!");
+                location.reload(); // Recarrega a página para atualizar a lista na tela
+            } else {
+                alert("Erro ao excluir o produto.");
+            }
+        } catch (erro) {
+            console.error("Erro na comunicação com o servidor:", erro);
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', buscarProdutosdaAPI);
