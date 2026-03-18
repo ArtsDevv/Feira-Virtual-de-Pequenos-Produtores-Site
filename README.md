@@ -41,8 +41,6 @@ Logo, este projeto tem como sua estrutura um ecossistema **Full-Stack** projetad
   <img src="https://skillicons.dev/icons?i=nodejs" title="Node.js" alt="Node.js" />
   <img src="https://skillicons.dev/icons?i=java" title="Java" alt="Java" />
   <img src="https://skillicons.dev/icons?i=spring" title="Spring Boot" alt="Spring" />
-  <img src="https://skillicons.dev/icons?i=git" title="Git" alt="Git" />
-  <img src="https://skillicons.dev/icons?i=vscode" title="VS Code" alt="VS Code" />
 </div>
 
 <br>
