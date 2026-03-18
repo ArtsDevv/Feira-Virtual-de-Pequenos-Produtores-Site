@@ -27,19 +27,20 @@ app.get('/', (req, res) => {
 // Quando o Front-end pedir os produtos para o Node, o Node vai lá no Python buscar.
 app.get('/api/produtos', async (req, res) => {
     try {
-        console.log("📥 [Node] O Front-end pediu a lista de produtos. Indo buscar no Python...");
+        console.log("📥 [Node] O Front-end pediu a lista de produtos...");
         
-        // O Node (via Axios) bate na porta do Python
-        const respostaPython = await axios.get(`${PYTHON_API_URL}/produtos`);
+        // Adicionamos um timeout de 5 segundos. Se o Python não responder, o Node desiste.
+        const respostaPython = await axios.get(`${PYTHON_API_URL}/produtos`, { timeout: 5000 });
         
-        console.log("📤 [Node] Python respondeu! Devolvendo dados para o Front-end.");
-        
-        // O Node repassa a bandeja de produtos para o Front-end
+        console.log("📤 [Node] Sucesso! Enviando dados.");
         res.json(respostaPython.data);
         
     } catch (erro) {
-        console.error("❌ Erro ao tentar falar com o Python:", erro.message);
-        res.status(500).json({ erro: "O servidor de dados (Python) parece estar offline." });
+        console.error("❌ Erro na ponte Node -> Python:", erro.message);
+        res.status(500).json({ 
+            erro: "O Python demorou demais para responder.",
+            detalhes: erro.message 
+        });
     }
 });
 
