@@ -12,7 +12,7 @@ app.use(cors()); // Libera o acesso para o seu Front-end
 app.use(express.json()); // Ensina o Node a ler arquivos JSON
 
 // O endereço do seu "Garçom" atual
-const PYTHON_API_URL = 'http://127.0.0.1:8000';
+const PYTHON_API_URL = 'http://127.0.0.1:8001';
 
 // ==========================================
 // ROTA 1: Teste de Vida
