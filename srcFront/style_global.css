@@ -208,3 +208,19 @@ footer {
         justify-content: center;
     }
 }
+
+.btn-excluir {
+    background-color: #e74c3c; /* Vermelho alerta */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-excluir:hover {
+    background-color: #c0392b; /* Vermelho mais escuro no hover */
+}
