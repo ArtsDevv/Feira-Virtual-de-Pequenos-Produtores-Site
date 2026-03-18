@@ -107,6 +107,18 @@
     color: var(--primary-color);
 }
 
+.section-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.vitrine-destaques cards-produtos {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center;
+}
+
 /* Ajuste para Celulares */
 @media (max-width: 768px) {
     .hero-banner {
