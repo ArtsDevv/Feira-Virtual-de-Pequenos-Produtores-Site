@@ -7,16 +7,27 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // 2. Chave e Elementos da DOM
-    const chaveProdutos = `produtos_produtor_${usuarioLogado.email}`;
-    let meusProdutos = JSON.parse(localStorage.getItem(chaveProdutos)) || [];
     const container = document.getElementById('lista-meus-produtos');
+    let meusProdutos = []; // A lista agora começa vazia e será preenchida pelo Banco
 
-    // 3. Função para desenhar a lista na tela
+    // 2. NOVA FUNÇÃO: Buscar os produtos do MySQL
+    async function carregarProdutosDoBanco() {
+        try {
+            const resposta = await fetch('http://127.0.0.1:8000/produtos');
+            if (resposta.ok) {
+                meusProdutos = await resposta.json();
+                renderizarProdutos(); // Chama a função de desenhar os cards
+            }
+        } catch (erro) {
+            console.error("Erro ao buscar produtos:", erro);
+            container.innerHTML = "<p>Erro ao conectar com o servidor Python.</p>";
+        }
+    }
+
+    // 3. Função para desenhar a lista na tela (Ajustada para os nomes do MySQL)
     function renderizarProdutos() {
         container.innerHTML = '';
 
-        // Se não tiver produtos cadastrados, mostra uma mensagem amigável
         if (meusProdutos.length === 0) {
             container.innerHTML = `
                 <div class="empty-state">
@@ -29,40 +40,49 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Desenha os cartões
         meusProdutos.forEach(produto => {
             const card = document.createElement('div');
             card.className = 'produto-card';
             
-            // Formatando o preço para ficar bonitinho (ex: 15,90)
-            const precoFormatado = Number(produto.price).toFixed(2).replace('.', ',');
+            // Trocamos price por preco
+            const precoFormatado = Number(produto.preco).toFixed(2).replace('.', ',');
 
+            // Trocamos img por imagem_url, name por nome, category por categoria e unidade por unidade_medida
             card.innerHTML = `
-                <img src="${produto.img}" alt="${produto.name}" onerror="this.src='../assets/image_logo.jpeg'">
-                <h3>${produto.name}</h3>
-                <span class="categoria">${produto.category}</span>
-                <div class="preco">R$ ${precoFormatado} <span class="unidade">/ ${produto.unidade}</span></div>
+                <img src="${produto.imagem_url}" alt="${produto.nome}" onerror="this.src='../assets/image_logo.jpeg'">
+                <h3>${produto.nome}</h3>
+                <span class="categoria">${produto.categoria}</span>
+                <div class="preco">R$ ${precoFormatado} <span class="unidade">/ ${produto.unidade_medida}</span></div>
                 
-                <button class="btn-remover" onclick="removerProduto('${produto.id}')">Excluir Produto</button>
+                <button class="btn-remover" onclick="removerProduto(${produto.id})">Excluir Produto</button>
             `;
             container.appendChild(card);
         });
     }
 
-    // 4. Função Global para remover (precisa ser global para funcionar no onclick do HTML injetado)
-    window.removerProduto = (idParaRemover) => {
-        if (confirm("Tem certeza que deseja excluir este produto do seu catálogo?")) {
-            // Filtra a lista mantendo apenas os produtos com ID diferente do que queremos apagar
-            meusProdutos = meusProdutos.filter(produto => produto.id !== idParaRemover);
-            
-            // Salva a lista atualizada no banco
-            localStorage.setItem(chaveProdutos, JSON.stringify(meusProdutos));
-            
-            // Desenha a tela novamente
-            renderizarProdutos();
+    // 4. NOVA FUNÇÃO GLOBAL PARA REMOVER (Conectada ao Python)
+    window.removerProduto = async (idParaRemover) => {
+        if (confirm("Tem certeza que deseja excluir este produto da feira? Ele sumirá do site para todos os clientes!")) {
+            try {
+                // Envia a ordem de DELETE para o Python apagar no MySQL
+                const resposta = await fetch(`http://127.0.0.1:8000/produtos/${idParaRemover}`, {
+                    method: 'DELETE'
+                });
+
+                if (resposta.ok) {
+                    alert("✅ Produto excluído com sucesso!");
+                    // Recarrega a lista do banco para atualizar a tela na hora
+                    carregarProdutosDoBanco(); 
+                } else {
+                    alert("❌ Erro ao tentar excluir o produto no servidor.");
+                }
+            } catch (erro) {
+                console.error("Erro na comunicação com o servidor:", erro);
+                alert("Erro de conexão. Verifique se o terminal do Uvicorn está rodando.");
+            }
         }
     }
 
-    // Inicializa a página
-    renderizarProdutos();
+    // 5. Inicializa a página buscando os dados do servidor
+    carregarProdutosDoBanco();
 });
