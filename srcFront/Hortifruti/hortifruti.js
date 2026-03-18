@@ -61,16 +61,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     atualizarMiniCart();
 });
 
-// Reutilizamos a lógica do carrinho (Traduzindo para o formato que o seu carrinho.html espera)
+// 4. FUNÇÃO DO CARRINHO (À Prova de Balas - Português e Inglês)
 window.adicionarAoCart = (id) => {
-    const prod = produtosBanco.find(p => p.id == id);
+    const prod = produtosBanco.find(p => p.id == id); 
     let cart = JSON.parse(localStorage.getItem(chaveCart)) || [];
     const index = cart.findIndex(i => i.id == id);
     
     if(index > -1) {
-        cart[index].qtd += 1;
+        // Se já tem no carrinho, soma 1 na quantidade certa
+        if (cart[index].quantidade !== undefined) cart[index].quantidade += 1;
+        else cart[index].qtd += 1;
     } else {
-        cart.push({ id: prod.id, name: prod.nome, price: prod.preco, img: prod.imagem_url, qtd: 1 });
+        // Salva no padrão em Português para ficar igual à Home e ao Banco
+        cart.push({
+            id: prod.id,
+            nome: prod.nome,
+            preco: prod.preco,
+            imagem: prod.imagem_url,
+            quantidade: 1
+        });
     }
     
     localStorage.setItem(chaveCart, JSON.stringify(cart));
@@ -81,11 +90,25 @@ window.atualizarMiniCart = () => {
     const lista = document.getElementById("mini-lista-carrinho");
     const totalMsg = document.getElementById("total-mini");
     if(!lista || !totalMsg) return;
+
     const cart = JSON.parse(localStorage.getItem(chaveCart)) || [];
     let total = 0;
+    
     lista.innerHTML = cart.map(i => {
-        total += i.price * i.qtd;
-        return `<div class="mini-item"><span>${i.qtd}x ${i.name}</span><span>R$ ${(i.price * i.qtd).toFixed(2)}</span></div>`;
+        // O "Pulo do Gato": Lemos o valor não importa como a Home salvou
+        const nomeItem = i.nome || i.name;
+        const precoItem = i.preco || i.price;
+        const qtdItem = i.quantidade || i.qtd;
+
+        total += precoItem * qtdItem;
+        
+        return `
+            <div class="mini-item">
+                <span>${qtdItem}x ${nomeItem}</span>
+                <span>R$ ${(precoItem * qtdItem).toFixed(2).replace('.',',')}</span>
+            </div>
+        `;
     }).join('');
+    
     totalMsg.innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
 };
