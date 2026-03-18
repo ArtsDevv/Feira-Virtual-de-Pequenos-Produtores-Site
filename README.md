@@ -12,16 +12,7 @@ A agricultura familiar, principal responsável pelos alimentos no campo no Brasi
 
 ---
 
-## 📸 Vitrine (Sneak Peek)
-*(Adicione aqui 2 ou 3 screenshots das telas do seu sistema. Ex: Home, Painel do Produtor e Carrinho)*
-<p align="center">
-  <img src="./caminho-da-sua-imagem1.png" width="400">
-  <img src="./caminho-da-sua-imagem2.png" width="400">
-</p>
-
----
-
-## ⚙️ Funcionalidades Desenvolvidas (Fase 1 e 2)
+## ⚙️ Funcionalidades Desenvolvidas:
 
 ### Front-end (Experiência do Cliente & Produtor)
 * **Design Responsivo e UI/UX:** Layouts focados na conversão e fluidez em dispositivos móveis e desktops (HTML5, CSS3, Flexbox, Grid).
@@ -37,12 +28,3 @@ A agricultura familiar, principal responsável pelos alimentos no campo no Brasi
 * **Isolamento de Dados & CORS:** Configuração de middleware de segurança para permitir acesso controlado às rotas da API.
 
 ---
-
-## 🚀 Roadmap e Evolução Arquitetural (Próximos Passos)
-Este sistema está sendo projetado para escalar. As próximas etapas envolvem a transição para uma **Arquitetura de Microsserviços**:
-
-- [ ] **Fase 3: Refatoração (DRY):** Centralização de scripts globais (como lógica de carrinho e sessões).
-- [ ] **Fase 4: API Gateway (Node.js):** Implementação de um servidor Node.js/Express para atuar como o ponto único de contato (BFF), roteando as requisições para os serviços corretos.
-- [ ] **Fase 5: Processamento Transacional (Java/Spring Boot):** Criação de microsserviços especializados em Java para lidar com o motor de pagamentos (checkout seguro), regras de negócio avançadas e geração de relatórios.
-
-  
