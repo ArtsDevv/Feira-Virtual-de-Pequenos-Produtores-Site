@@ -41,8 +41,10 @@ Logo, este projeto tem como sua estrutura um ecossistema **Full-Stack** projetad
   <img src="https://skillicons.dev/icons?i=nodejs" title="Node.js" alt="Node.js" />
   <img src="https://skillicons.dev/icons?i=java" title="Java" alt="Java" />
   <img src="https://skillicons.dev/icons?i=spring" title="Spring Boot" alt="Spring" />
+  <img src="https://skillicons.dev/icons?i=git" title="Git" alt="Git" />
+  <img src="https://skillicons.dev/icons?i=vscode" title="VS Code" alt="VS Code" />
 </div>
 
 <br>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=204269&height=120&section=footer" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0052D4,4364F7&height=120&section=footer" width="100%"/>
