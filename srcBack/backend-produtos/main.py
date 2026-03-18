@@ -68,3 +68,17 @@ def criar_produto(produto: ProdutoBase, db: Session = Depends(get_db)):
     db.refresh(novo_produto)
     return novo_produto
 
+@app.delete("/produtos/{produto_id}")
+def deletar_produto(produto_id: int, db: Session = Depends(get_db)):
+    # 1. Procura o produto no banco
+    produto_para_deletar = db.query(Produto).filter(Produto.id == produto_id).first()
+    
+    # 2. Se não achar, avisa que deu erro
+    if not produto_para_deletar:
+        raise HTTPException(status_code=404, detail="Produto não encontrado")
+    
+    # 3. Se achar, deleta e salva a alteração
+    db.delete(produto_para_deletar)
+    db.commit()
+    return {"mensagem": f"Produto com ID {produto_id} foi removido da feira!"}
+
