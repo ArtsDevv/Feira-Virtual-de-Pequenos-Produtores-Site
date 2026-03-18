@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
         // 1. Busca TODOS os produtos do MySQL
-        const resposta = await fetch('http://127.0.0.1:8000/produtos');
+        const resposta = await fetch('http://localhost:3000/api/produtos');
         const todosProdutos = await resposta.json();
 
         // 2. Pega apenas os últimos 4 produtos (os mais novos)

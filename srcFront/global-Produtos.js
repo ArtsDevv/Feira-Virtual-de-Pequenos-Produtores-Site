@@ -1,7 +1,7 @@
 // =========================================================
 // INTEGRAÇÃO COM A API PYTHON
 // =========================================================
-const API_URL = 'http://127.0.0.1:8000/produtos';
+const API_URL = 'http://localhost:3000/api/produtos';
 
 async function buscarProdutosdaAPI() {
     try {
