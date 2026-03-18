@@ -1,36 +1,48 @@
-# 🚜 Feira Virtual de Pequenos Produtores
+# 🛒 Feira Virtual de Pequenos Produtores
 
-![Status do Projeto](https://img.shields.io/badge/Status-Em_Desenvolvimento-yellow) ![Tech](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS%20%7C%20Python%20%7C%20Node.js-blue)
+> Um ecossistema Full-Stack projetado para eliminar intermediários na cadeia de alimentos, conectando consumidores a alimentos frescos e locais, além de oferecer gestão profissional para pequenos produtores.
 
-## 📖 Sobre o Projeto
+![Status do Projeto](https://img.shields.io/badge/Status-Em_Desenvolvimento-yellow)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Python](https://img.shields.io/badge/Python-FastAPI-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
-A agricultura familiar gera a maioria dos empregos no campo no Brasil, mas enfrenta barreiras tecnológicas e de acesso ao mercado. A **Feira Virtual** é uma plataforma Full-Stack projetada para eliminar intermediários na cadeia de alimentos, conectar consumidores a alimentos frescos e locais, e oferecer gestão profissional para pequenos produtores (como aviso de colheita e gestão de estoque).
+## 📌 Sobre o Projeto
+A agricultura familiar, principal responsável pelos alimentos no campo no Brasil, enfrenta enormes barreiras de acesso ao mercado e tecnologia. Este projeto, desenvolvido como Trabalho de Conclusão de Curso (TCC), aplica a engenharia de software para gerar **impacto social real**. A plataforma integra uma interface web ágil com uma infraestrutura de back-end robusta e segura.
 
-Este projeto faz parte de um Trabalho de Conclusão de Curso focado em aplicar a Engenharia de Software para gerar impacto social. A plataforma integra uma interface web ágil e responsiva com uma infraestrutura de back-end robusta, garantindo o processamento seguro de ponta a ponta — desde a visualização da vitrine até a efetivação do pedido no painel do agricultor.
+---
 
-## 📱 Funcionalidades
+## 📸 Vitrine (Sneak Peek)
+*(Adicione aqui 2 ou 3 screenshots das telas do seu sistema. Ex: Home, Painel do Produtor e Carrinho)*
+<p align="center">
+  <img src="./caminho-da-sua-imagem1.png" width="400">
+  <img src="./caminho-da-sua-imagem2.png" width="400">
+</p>
 
-### 🌐 Front-end (Experiência do Cliente)
-* **Vitrines Dinâmicas e Responsivas:** Páginas categorizadas (Hortifruti, Mercearia e Artesanato) adaptadas para uso fluido em dispositivos móveis e desktops.
-* **Filtros e Busca em Tempo Real:** Sistema de pesquisa por texto e ordenação de preços executados instantaneamente.
-* **Carrinho de Compras Seguro:** Lógica de persistência de sessão e cálculo de frete, atrelando os itens selecionados ao perfil do usuário autenticado.
-* **Dashboard do Usuário:** Painel de controle para visualização de dados cadastrais e status da cesta.
+---
 
-### ⚙️ Back-end (Gestão e Infraestrutura)
-* **Autenticação e Controle de Acesso:** Sistema de login com validação segura para separar as visões de "Cliente" e "Produtor".
-* **Painel Administrativo do Produtor:** Ambiente exclusivo onde o pequeno agricultor cadastra novos produtos, atualiza disponibilidade e gerencia os pedidos recebidos.
-* **API e Roteamento de Dados:** Comunicação eficiente entre a interface web e o servidor, garantindo atualizações de estoque em tempo real.
-* **Banco de Dados Centralizado:** Armazenamento relacional de todas as entidades do marketplace (usuários, catálogos de produtos e histórico de transações).
+## ⚙️ Funcionalidades Desenvolvidas (Fase 1 e 2)
 
-## 🛠️ Tecnologias Utilizadas
+### Front-end (Experiência do Cliente & Produtor)
+* **Design Responsivo e UI/UX:** Layouts focados na conversão e fluidez em dispositivos móveis e desktops (HTML5, CSS3, Flexbox, Grid).
+* **Consumo Dinâmico (Vanilla JS):** Requisições assíncronas nativas (`fetch` API) para renderização de vitrines sem recarregamento de página.
+* **Filtros em Tempo Real:** Sistema de pesquisa e organização de produtos processados instantaneamente através do JavaScript.
+* **Dashboard do Produtor:** Painel interativo para operações de CRUD (Visualização, Cadastro e Exclusão de itens do catálogo).
 
-**Front-end (Experiência e Interface):**
-* **React:** Componentização, gerenciamento de estado e renderização dinâmica de interfaces (SPA).
-* **JavaScript (ES6+):** Lógica de negócio no lado do cliente e consumo de APIs.
-* **HTML5 & CSS3:** Semântica estrutural, Flexbox/Grid Layout e design responsivo (Mobile First).
+### Back-end & Infraestrutura (Gestão de Dados)
+* **Java/Spring Boot:** Criação de microsserviços especializados em Java para lidar com o motor de pagamentos (checkout seguro), regras de negócio avançadas e geração de relatórios.
+* **API Gateway (Node.js):** Implementação de um servidor Node.js/Express para atuar como o ponto único de contato (BFF), roteando as requisições para os serviços corretos.
+* **API RESTful (Python/FastAPI):** Comunicação eficiente e tipada entre a interface web e o banco de dados.
+* **Banco de Dados Relacional:** Modelagem de dados centralizada no **MySQL**, garantindo integridade das informações e persistência real dos dados.
+* **Isolamento de Dados & CORS:** Configuração de middleware de segurança para permitir acesso controlado às rotas da API.
 
-**Back-end, Integração & Infraestrutura:**
-* **Node.js & Python:** Lógica de servidor, roteamento e regras de negócio robustas.
-* **JSON:** Formato padrão para estruturação de dados e comunicação ágil (APIs) entre o Front-end e o Back-end.
-* **Banco de Dados:** Armazenamento estruturado (SQL/NoSQL) para produtos, usuários e pedidos.
-* **Git/GitHub:** Versionamento de código e integração.
+---
+
+## 🚀 Roadmap e Evolução Arquitetural (Próximos Passos)
+Este sistema está sendo projetado para escalar. As próximas etapas envolvem a transição para uma **Arquitetura de Microsserviços**:
+
+- [ ] **Fase 3: Refatoração (DRY):** Centralização de scripts globais (como lógica de carrinho e sessões).
+- [ ] **Fase 4: API Gateway (Node.js):** Implementação de um servidor Node.js/Express para atuar como o ponto único de contato (BFF), roteando as requisições para os serviços corretos.
+- [ ] **Fase 5: Processamento Transacional (Java/Spring Boot):** Criação de microsserviços especializados em Java para lidar com o motor de pagamentos (checkout seguro), regras de negócio avançadas e geração de relatórios.
+
+  
