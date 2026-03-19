@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formLogin = document.getElementById("form-login");
 
     if (formLogin) {
-        formLogin.addEventListener("submit", function(event) {
+        formLogin.addEventListener("submit", async function(event) {
             event.preventDefault(); // Evita o reload da página
 
             const emailDigitado = document.getElementById("email-login").value.trim();
@@ -14,32 +14,48 @@ document.addEventListener("DOMContentLoaded", () => {
             erro.style.display = "none";
             erro.innerText = "";
 
-            // 1. Puxa os usuários do localStorage
-            const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+            try {
+                // 1. Empacota os dados para enviar ao Java
+                const dadosLogin = {
+                    email: emailDigitado,
+                    senha: senhaDigitada
+                };
 
-            // 2. Procura o e-mail na lista
-            const usuarioEncontrado = usuarios.find(user => user.email === emailDigitado);
+                // 2. Bate na porta do nosso Gerente Java (Rota de Login)
+                const resposta = await fetch('http://localhost:8082/api/usuarios/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dadosLogin)
+                });
 
-            if (!usuarioEncontrado) {
-                erro.innerText = "E-mail não encontrado. Verifique ou cadastre-se.";
+                // 3. O Java respondeu! Vamos ver o que ele disse:
+                if (resposta.ok) {
+                    // 🔓 Acesso Liberado (Status 200)
+                    const usuarioDoBanco = await resposta.json(); // Pega os dados validados do MySQL
+                    
+                    // Salva a "credencial" de logado no navegador para o carrinho e outras páginas saberem quem é
+                    localStorage.setItem("usuarioLogado", JSON.stringify(usuarioDoBanco));
+
+                    alert(`Bem-vindo(a) de volta, ${usuarioDoBanco.nome}!`);
+                    
+                    // Redireciona para a Home
+                    window.location.href = "../index.html"; 
+                } else if (resposta.status === 401) {
+                    // 🚫 Acesso Negado (Status 401 - E-mail ou senha errados)
+                    erro.innerText = "E-mail ou senha incorretos. Tente novamente.";
+                    erro.style.display = "block";
+                } else {
+                    // Outros erros
+                    erro.innerText = "Erro ao fazer login. Verifique seus dados.";
+                    erro.style.display = "block";
+                }
+
+            } catch (error) {
+                // Se o Java estiver desligado
+                console.error("Erro de conexão com o Java:", error);
+                erro.innerText = "O servidor está offline. Tente novamente mais tarde.";
                 erro.style.display = "block";
-                return;
             }
-
-            // 3. Checa a senha
-            if (usuarioEncontrado.senha !== senhaDigitada) {
-                erro.innerText = "Senha incorreta. Tente novamente.";
-                erro.style.display = "block";
-                return;
-            }
-
-            // 4. Login feito com sucesso! Salva o "estado" de logado
-            localStorage.setItem("usuarioLogado", JSON.stringify(usuarioEncontrado));
-
-            alert(`Bem-vindo(a) de volta, ${usuarioEncontrado.nome}!`);
-            
-            // Redireciona para a página principal
-            window.location.href = "../index.html"; 
         });
     }
 });
