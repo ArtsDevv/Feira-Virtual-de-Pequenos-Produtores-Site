@@ -1,7 +1,7 @@
 package com.feiravirtual.usuarios.controller;
 
 import com.feiravirtual.usuarios.model.Usuario;
-import com.feiravirtual.usuarios.model.repository.UsuarioRepository;
+import com.feiravirtual.usuarios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

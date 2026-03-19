@@ -1,4 +1,4 @@
-package com.feiravirtual.usuarios.model.repository;
+package com.feiravirtual.usuarios.repository;
 
 import com.feiravirtual.usuarios.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
