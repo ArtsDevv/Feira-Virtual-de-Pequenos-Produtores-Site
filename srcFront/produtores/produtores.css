@@ -1,39 +1,96 @@
+/* Configurações base da página */
 body {
     background-color: #F1EFE9;
     padding: 0;
     margin: 0;
 }
- 
+
 .container {
-  max-width: 1280px;
-  margin: 0 auto;
+    max-width: 1000px; /* Mais estreito para a leitura ficar mais confortável */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Título no topo da página */
+.titulo-pagina {
+    text-align: center;
+    margin: 60px auto 40px;
+}
+
+.titulo-pagina h2 {
+    font-family: "Gilda Display", serif;
+    font-size: 36px;
+    color: #4A3C31;
+    margin-bottom: 10px;
+}
+
+.titulo-pagina p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Estilo dos Cartões de Produtores */
+.listagem-produtores {
+    display: flex;
+    flex-direction: column;
+    gap: 60px; /* Espaço entre um produtor e outro */
+    margin-bottom: 80px;
 }
 
 .producersProfile {
-    .producerBanner {
-        img {
-            width: 100%;
-        }
-    }
-
-    .producerDetails{
-        text-align: center;
-        margin-top: -120px;
-    }
+    background-color: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* Sombra elegante */
+    transition: transform 0.3s ease;
 }
 
-.logo p {
-    font-family: 'Montserrat';
+.producersProfile:hover {
+    transform: translateY(-5px); /* Dá um pulinho suave ao passar o mouse */
 }
 
-h3 {
+/* Banner de Fundo */
+.producerBanner img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* Impede a imagem de esticar ou amassar */
+    display: block;
+}
+
+/* Informações de Texto e Avatar */
+.producerDetails {
+    text-align: center;
+    padding: 0 40px 50px 40px;
+    margin-top: -80px; /* Puxa o conteúdo para cima do banner */
+    position: relative;
+}
+
+/* Foto do Produtor (Estilo Avatar) */
+.producerDetails .avatar {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 50%; /* Deixa redondinho */
+    border: 6px solid #ffffff; /* Borda branca grossa para separar do banner */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+}
+
+.producerDetails h3 {
     font-family: "Gilda Display", serif;
     font-weight: 900;
-    font-size: 26px;
+    font-size: 28px;
+    color: #333;
+    margin: 15px 0 15px 0;
 }
 
 .producerDetails p {
     font-family: 'Montserrat', sans-serif;
-    margin-bottom: 42px;
+    font-size: 15px;
+    line-height: 1.8; /* Aumenta o espaçamento das linhas para leitura fácil */
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
