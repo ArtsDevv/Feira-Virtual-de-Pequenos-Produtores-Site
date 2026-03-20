@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Identifica o usuário e define qual "gaveta" (chave) do banco de dados abrir
+    // 1. Identifica o usuário e define qual "gaveta" do banco de dados abrir
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
     const chaveCart = usuarioLogado ? `carrinho_${usuarioLogado.email}` : "carrinho_visitante";
     
@@ -12,13 +12,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnFinalizar = document.getElementById('btn-finalizar');
     const msgLogin = document.getElementById('msg-login');
 
-    // === LÓGICA DO BOTÃO FINALIZAR PEDIDO ===
+    // === LÓGICA DO BOTÃO FINALIZAR PEDIDO (INTEGRADA COM O JAVA) ===
     if (btnFinalizar) {
-        btnFinalizar.addEventListener('click', () => {
+        btnFinalizar.addEventListener('click', async () => { 
             // Regra 1: Precisa estar logado
             if (!usuarioLogado) {
-                msgLogin.innerText = "Você precisa fazer login para finalizar a compra!";
-                msgLogin.style.display = "block";
+                if (msgLogin) {
+                    msgLogin.innerText = "Você precisa fazer login para finalizar a compra!";
+                    msgLogin.style.display = "block";
+                } else {
+                    alert("Você precisa fazer login para finalizar a compra!");
+                }
                 setTimeout(() => {
                     window.location.href = "../Acesse a sua conta/Acesseasuaconta.html";
                 }, 2000);
@@ -31,15 +35,64 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Regra 3: Redireciona para a página de Checkout que criamos!
-            // ATENÇÃO: Verifique se o nome da pasta e do arquivo batem com a sua estrutura.
-            window.location.href = "../finalizar_pedido/finalizar.html"; 
+            // Regra 3: Integração com o Banco de Dados (Java)
+            try {
+                // Calcula o total
+                let subtotal = 0;
+                carrinho.forEach(item => {
+                    let qtd = item.qtd ? Number(item.qtd) : 1;
+                    subtotal += item.price * qtd;
+                });
+                const valorTotalPedido = subtotal + taxaFrete;
+
+                // Monta o pacote EXATAMENTE como o Java espera
+                const pacotePedido = {
+                    usuarioId: usuarioLogado.id, // ID oficial gerado pelo MySQL
+                    itensCarrinho: JSON.stringify(carrinho), // Transforma o array em texto para o banco
+                    valorTotal: valorTotalPedido
+                };
+
+                // Desabilita o botão para evitar cliques duplos
+                btnFinalizar.innerText = "Processando Pedido...";
+                btnFinalizar.disabled = true;
+
+                // Envia para o nosso Gerente na porta 8082
+                const resposta = await fetch('http://localhost:8082/api/pedidos/finalizar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(pacotePedido)
+                });
+
+                if (resposta.ok) {
+                    // SUCESSO!
+                    alert("🎉 Pedido realizado com sucesso! Os produtores já estão separando seus alimentos.");
+                    
+                    // Limpa o carrinho atual
+                    localStorage.removeItem(chaveCart);
+                    
+                    // Redireciona para a Home
+                    window.location.href = "../index.html";
+                } else {
+                    const erroJava = await resposta.text();
+                    alert("Ops! Ocorreu um problema: " + erroJava);
+                    btnFinalizar.innerText = "Finalizar Pedido";
+                    btnFinalizar.disabled = false;
+                }
+
+            } catch (erro) {
+                console.error("Erro de conexão:", erro);
+                alert("Erro ao conectar com o servidor. Verifique se o sistema está online.");
+                btnFinalizar.innerText = "Finalizar Pedido";
+                btnFinalizar.disabled = false;
+            }
         });
     }
 
     // === FUNÇÕES DE RENDERIZAÇÃO E CÁLCULO ===
     function renderizarCarrinho() {
         const listaHtml = document.getElementById('lista-carrinho');
+        if (!listaHtml) return; // Evita erro se a div não existir
+        
         listaHtml.innerHTML = '';
         let subtotal = 0;
 
@@ -50,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         carrinho.forEach((item, index) => {
-            let qtd = item.qtd ? Number(item.qtd) : 1; // Garante que a qtd é um número
+            let qtd = item.qtd ? Number(item.qtd) : 1;
             subtotal += item.price * qtd;
             
             listaHtml.innerHTML += `
@@ -74,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         atualizarTotais(subtotal);
     }
 
-    // Funções globais para manipular o carrinho (necessárias para os botões do HTML)
+    // Funções globais (window) para os botões do HTML enxergarem
     window.alterarQtd = (index, variacao) => {
         carrinho[index].qtd += variacao;
         if (carrinho[index].qtd <= 0) {
@@ -89,9 +142,14 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     function atualizarTotais(subtotal) {
-        document.getElementById('subtotal').innerText = formatarMoeda(subtotal);
-        const total = subtotal > 0 ? subtotal + taxaFrete : 0;
-        document.getElementById('total-pedido').innerText = formatarMoeda(total);
+        const elSubtotal = document.getElementById('subtotal');
+        const elTotal = document.getElementById('total-pedido');
+        
+        if (elSubtotal) elSubtotal.innerText = formatarMoeda(subtotal);
+        if (elTotal) {
+            const total = subtotal > 0 ? subtotal + taxaFrete : 0;
+            elTotal.innerText = formatarMoeda(total);
+        }
     }
 
     function salvarERenderizar() {
