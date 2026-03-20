@@ -2,50 +2,66 @@ document.addEventListener("DOMContentLoaded", () => {
     const cadastroForm = document.getElementById("cadastro-form");
 
     if (cadastroForm) {
-        cadastroForm.addEventListener("submit", handleFormSubmission);
-    }
+        cadastroForm.addEventListener("submit", async function(event) {
+            event.preventDefault(); // Impede o recarregamento
 
-    function handleFormSubmission(event) {
-        event.preventDefault(); // Impede o recarregamento da página
+            // Captura os dados do HTML
+            const name = document.getElementById("nome").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const telefone = document.getElementById("telefone").value.trim();
+            const senha = document.getElementById("senha").value.trim();
+            const localizacao = document.getElementById("localizacao").value.trim();
+            const descricao = document.getElementById("descricao").value.trim();
+            
+            // Pega os checkboxes marcados e transforma numa string (ex: "hortifruti, laticinios")
+            const tiposProducao = Array.from(
+                document.querySelectorAll('input[name="tipo_producao"]:checked')
+            ).map(item => item.value).join(', ');
 
-        // Captura os dados
-        const name = document.getElementById("nome").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const telefone = document.getElementById("telefone").value.trim();
-        const senha = document.getElementById("senha").value.trim();
-        const localizacao = document.getElementById("localizacao").value.trim();
-        const descricao = document.getElementById("descricao").value.trim();
-        
-        const tiposProducao = Array.from(
-            document.querySelectorAll('input[name="tipo_producao"]:checked')
-        ).map(item => item.value);
+            // Monta o objeto EXATAMENTE como o Java vai esperar agora
+            const novoProdutor = {
+                nome: name,
+                email: email,
+                senha: senha, 
+                telefone: telefone,
+                localizacao: localizacao,
+                descricao: descricao,
+                tiposProducao: tiposProducao,
+                tipo: 'produtor' // <-- A TAG MÁGICA QUE SEPARA O PRODUTOR DO COMPRADOR
+            };
 
-        // Monta o objeto do Usuário com a "TAG" especial
-        const novoProdutor = {
-            nome: name,
-            email: email,
-            senha: senha, // Num app real, isso iria para um banco criptografado
-            telefone: telefone,
-            localizacao: localizacao,
-            descricao: descricao,
-            tiposProducao: tiposProducao,
-            tipo: 'produtor' // <-- ISSO DEFINE O PAPEL DELE NO MARKETPLACE
-        };
+            const btnSubmit = cadastroForm.querySelector('.btn-submit');
+            btnSubmit.innerText = "Criando Conta...";
+            btnSubmit.disabled = true;
 
-        // Salva no banco de dados "Geral" de usuários
-        localStorage.setItem(`usuario_${email}`, JSON.stringify(novoProdutor));
+            try {
+                // Manda os dados para o Spring Boot (Java)
+                const resposta = await fetch('http://localhost:8082/api/usuarios/cadastrar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(novoProdutor)
+                });
 
-        // Faz o Login Automático do novo produtor
-        localStorage.setItem("usuarioLogado", JSON.stringify({
-            nome: novoProdutor.nome,
-            email: novoProdutor.email,
-            tipo: novoProdutor.tipo
-        }));
+                if (resposta.ok) {
+                    const produtorSalvo = await resposta.json();
 
-        // Feedback e Redirecionamento
-        alert("Conta criada com sucesso! Bem-vindo à rede de produtores.");
-        
-        // Redireciona para o Painel Administrativo do Produtor
-        window.location.href = "../Configuracoes_produtor/Configuracoes_Produtor.html";
+                    // Faz o Login Automático com a resposta oficial do Banco
+                    localStorage.setItem("usuarioLogado", JSON.stringify(produtorSalvo));
+
+                    alert("Conta criada com sucesso! Bem-vindo à rede de produtores da Feira Virtual.");
+                    window.location.href = "../Configuracoes_produtor/Configuracoes_Produtor.html";
+                } else {
+                    alert("Erro ao cadastrar. Este e-mail pode já estar em uso.");
+                    btnSubmit.innerText = "Criar Conta de Produtor";
+                    btnSubmit.disabled = false;
+                }
+
+            } catch (erro) {
+                console.error("Erro na comunicação com o Java:", erro);
+                alert("Erro de conexão com o servidor. Verifique se o banco de dados está online.");
+                btnSubmit.innerText = "Criar Conta de Produtor";
+                btnSubmit.disabled = false;
+            }
+        });
     }
 });
