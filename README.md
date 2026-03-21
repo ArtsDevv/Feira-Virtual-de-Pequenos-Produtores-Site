@@ -17,13 +17,25 @@ Logo, este projeto tem como sua estrutura um ecossistema **Full-Stack** projetad
 * **Consumo Dinâmico (Vanilla JS):** Requisições assíncronas nativas (`fetch` API) para renderização de vitrines sem recarregamento de página.
 * **Filtros em Tempo Real:** Sistema de pesquisa e organização de produtos processados instantaneamente através do JavaScript.
 * **Dashboard do Produtor:** Painel interativo para operações de CRUD (Visualização, Cadastro e Exclusão de itens do catálogo).
+* **Controle de Acesso Baseado em Papéis (RBAC):** Renderização condicional da interface (UX dinâmica). O sistema identifica se o usuário autenticado é um "Comprador" ou "Produtor", adaptando os menus, botões e painéis de controle para cada perfil com segurança.
+* **Gestão de Sessão e Carrinho Inteligente:** Carrinhos de compra atrelados individualmente a cada usuário no banco, com cálculo em tempo real e histórico de pedidos renderizado dinamicamente.
 
 ### Back-end & Infraestrutura (Gestão de Dados)
-* **Java/Spring Boot:** Criação de microsserviços especializados em Java para lidar com o motor de pagamentos (checkout seguro), regras de negócio avançadas e geração de relatórios.
+* **Arquitetura de Microsserviços:** Divisão clara de responsabilidades no back-end utilizando ecossistemas variados.
+* **Java/Spring Boot (Usuários e Pedidos):** Gerencia a autenticação, controle de perfis (Comprador/Produtor) e todo o fluxo de histórico de vendas e pedidos no banco.
+* **API RESTful (Python/FastAPI):** Comunicação rápida, eficiente e tipada focada exclusivamente no gerenciamento do catálogo de produtos.
 * **API Gateway (Node.js):** Implementação de um servidor Node.js/Express para atuar como o ponto único de contato (BFF), roteando as requisições para os serviços corretos.
-* **API RESTful (Python/FastAPI):** Comunicação eficiente e tipada entre a interface web e o banco de dados.
-* **Banco de Dados Relacional:** Modelagem de dados centralizada no **MySQL**, garantindo integridade das informações e persistência real dos dados.
-* **Isolamento de Dados & CORS:** Configuração de middleware de segurança para permitir acesso controlado às rotas da API.
+* **Mapeamento Objeto-Relacional (JPA/Hibernate):** Utilizado no Spring Boot para modelagem complexa e geração automática das tabelas e amarrações (Foreign Keys) no MySQL.
+* **Banco de Dados Relacional:** Modelagem centralizada no **MySQL**, garantindo integridade das informações e persistência real dos dados.
+* **Isolamento de Dados & CORS:** Configuração de middleware de segurança para permitir acesso controlado às rotas das APIs.
+
+---
+
+## 🚀 Próximos Passos (Roadmap)
+* Implementação de Gateway de Pagamento para checkout real.
+* Deploy em Nuvem (Cloud Hosting) para os microsserviços e banco de dados.
+* Amarração de Foreign Key conectando cada Produto diretamente ao ID de seu Produtor exclusivo.
+* Sistema de atualização de status do pedido em tempo real na visão do cliente (Preparando -> Saiu para Entrega).
 
 ---
 
