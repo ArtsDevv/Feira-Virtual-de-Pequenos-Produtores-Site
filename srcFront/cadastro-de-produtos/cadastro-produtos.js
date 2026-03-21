@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // 3. Envia para o Backend (Python + MySQL)
-            const resposta = await fetch('http://127.0.0.1:8000/produtos', {
+            const resposta = await fetch('http://127.0.0.1:8001/produtos', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

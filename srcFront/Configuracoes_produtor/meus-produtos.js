@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. NOVA FUNÇÃO: Buscar os produtos do MySQL
     async function carregarProdutosDoBanco() {
         try {
-            const resposta = await fetch('http://127.0.0.1:8000/produtos');
+            const resposta = await fetch('http://127.0.0.1:8001/produtos');
             if (resposta.ok) {
                 meusProdutos = await resposta.json();
                 renderizarProdutos(); // Chama a função de desenhar os cards
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (confirm("Tem certeza que deseja excluir este produto da feira? Ele sumirá do site para todos os clientes!")) {
             try {
                 // Envia a ordem de DELETE para o Python apagar no MySQL
-                const resposta = await fetch(`http://127.0.0.1:8000/produtos/${idParaRemover}`, {
+                const resposta = await fetch(`http://127.0.0.1:8001/produtos/${idParaRemover}`, {
                     method: 'DELETE'
                 });
 
