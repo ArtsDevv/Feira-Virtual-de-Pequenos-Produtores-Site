@@ -60,4 +60,13 @@ public class PedidoController {
         List<Pedido> pedidos = pedidoRepository.findByUsuarioId(usuarioId);
         return ResponseEntity.ok(pedidos);
     }
+
+    // ==========================================
+    // PODER NOVO: LISTAR TODOS OS PEDIDOS DA FEIRA
+    // ==========================================
+    @GetMapping
+    public ResponseEntity<List<Pedido>> listarTodosOsPedidos() {
+        List<Pedido> todosPedidos = pedidoRepository.findAll();
+        return ResponseEntity.ok(todosPedidos);
+    }
 }
