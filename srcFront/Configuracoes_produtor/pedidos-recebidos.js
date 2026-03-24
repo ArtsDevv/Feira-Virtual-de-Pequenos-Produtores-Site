@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Verifica Autenticação
+    // 1. Verifica Autenticação e Segurança
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
     
     if (!usuarioLogado || usuarioLogado.tipo !== 'produtor') {
@@ -9,75 +9,108 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const container = document.getElementById('lista-pedidos');
 
-    // 2. Busca os pedidos reais do banco de dados (localStorage por enquanto)
-    // No futuro, isso será substituído por um 'fetch()' para a API do seu Back-end em Python/Node.
-    const chavePedidos = `pedidos_produtor_${usuarioLogado.email}`;
-    let meusPedidos = JSON.parse(localStorage.getItem(chavePedidos)) || [];
+    // ==========================================
+    // 2. O ATAQUE: BUSCAR PEDIDOS NO JAVA
+    // ==========================================
+    async function carregarPedidosDaFeira() {
+        try {
+            container.innerHTML = "<p style='text-align:center; padding: 20px;'>Buscando novas vendas no servidor...</p>";
+            
+            // Bate na porta do Java pedindo a lista completa
+            const resposta = await fetch('http://localhost:8082/api/pedidos');
+            
+            if (!resposta.ok) throw new Error("Falha ao buscar pedidos");
 
-    // 3. Renderiza os Pedidos na Tela
-    function renderizarPedidos() {
+            const pedidos = await resposta.json();
+            renderizarPedidos(pedidos);
+
+        } catch (erro) {
+            console.error("Erro de conexão:", erro);
+            container.innerHTML = `
+                <div class="empty-state">
+                    <h2 style="color: #e74c3c;">Servidor Offline</h2>
+                    <p>Não foi possível carregar os pedidos. Verifique se o Java (Porta 8082) está rodando.</p>
+                </div>`;
+        }
+    }
+
+    // ==========================================
+    // 3. DESENHAR O LOOT (Os pedidos na tela)
+    // ==========================================
+    function renderizarPedidos(listaPedidos) {
         container.innerHTML = '';
 
-        // Se a lista estiver vazia (sem pedidos recebidos ainda)
-        if (meusPedidos.length === 0) {
+        if (listaPedidos.length === 0) {
             container.innerHTML = `
-                <div class="empty-state" style="text-align: center; padding: 60px 20px; background: #fff; border-radius: 16px; border: 2px dashed #ccc; color: #7f8c8d; margin-top: 20px;">
-                    <svg viewBox="0 0 24 24" width="60" height="60" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 15px;">
-                        <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                    </svg>
-                    <h2>Nenhum pedido ainda</h2>
-                    <p style="margin-top: 10px;">Quando os clientes comprarem seus produtos na loja, os pedidos aparecerão aqui.</p>
+                <div class="empty-state" style="text-align: center; padding: 60px 20px; background: #fff; border-radius: 16px; border: 2px dashed #ccc; color: #7f8c8d;">
+                    <h2>Nenhuma venda ainda</h2>
+                    <p>Quando os clientes comprarem na loja, os pedidos aparecerão aqui em tempo real.</p>
                 </div>
             `;
             return;
         }
 
-        // Desenha os cartões reais
-        meusPedidos.forEach(pedido => {
+        // Inverte para a venda mais recente aparecer no topo
+        const pedidosRecentes = listaPedidos.reverse();
+
+        pedidosRecentes.forEach(pedido => {
             const card = document.createElement('div');
             card.className = 'pedido-card';
 
-            // Define a classe da cor baseado no status
-            let corBadge = "";
-            if(pedido.status === 'pendente') corBadge = "status-pendente";
-            if(pedido.status === 'preparando') corBadge = "status-preparando";
-            if(pedido.status === 'concluido') corBadge = "status-concluido";
+            // Formata a data (Ex: 21/03/2026 às 14:30)
+            const dataFormatada = new Date(pedido.dataPedido).toLocaleDateString('pt-BR', {
+                day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit'
+            });
 
+            // Desempacota o textão JSON das frutas do carrinho
+            let itensHtml = "";
+            try {
+                const itens = JSON.parse(pedido.itensCarrinho);
+                itensHtml = itens.map(item => {
+                    let nome = item.nome || item.name;
+                    let qtd = item.quantidade !== undefined ? item.quantidade : (item.qtd ? item.qtd : 1);
+                    return `• ${qtd}x ${nome}<br>`;
+                }).join('');
+            } catch (e) {
+                itensHtml = "Erro ao ler produtos.";
+            }
+
+            // O Card HTML
             card.innerHTML = `
                 <div class="pedido-header">
                     <div>
-                        <span class="pedido-id">${pedido.id}</span>
-                        <span class="pedido-data"> • ${pedido.data}</span>
+                        <span class="pedido-id">Pedido #${pedido.id}</span>
+                        <span class="pedido-data"> • ${dataFormatada}</span>
                     </div>
-                    <span class="status-badge ${corBadge}">${pedido.statusTxt}</span>
+                    <span class="status-badge status-preparando">Em Preparo</span>
                 </div>
                 
                 <div class="pedido-body">
                     <div class="cliente-info">
                         <h4>Dados do Cliente</h4>
-                        <p><strong>Nome:</strong> ${pedido.cliente}</p>
-                        <p><strong>Local:</strong> ${pedido.endereco}</p>
+                        <p><strong>ID do Comprador:</strong> #${pedido.usuarioId}</p>
+                        <p><strong>Status:</strong> Aguardando envio</p>
                     </div>
                     <div class="itens-info">
-                        <h4>Itens do Pedido</h4>
-                        <p>${pedido.itens}</p>
+                        <h4>Itens da Cesta</h4>
+                        <p>${itensHtml}</p>
                     </div>
                 </div>
 
                 <div class="pedido-footer">
-                    <span class="total-pedido">Total: R$ ${Number(pedido.total).toFixed(2).replace('.', ',')}</span>
-                    <button class="btn-acao" onclick="avancarStatus('${pedido.id}')">Atualizar Status</button>
+                    <span class="total-pedido">Total: ${pedido.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                    <button class="btn-acao" onclick="avancarStatus(${pedido.id})">Marcar como Entregue</button>
                 </div>
             `;
             container.appendChild(card);
         });
     }
 
-    // Função pronta para ser conectada à lógica de mudança de status no futuro
+    // Função de UX para simular a mudança de status
     window.avancarStatus = (id) => {
-        alert(`A função de atualizar o status do pedido ${id} será conectada em breve!`);
+        alert(`✅ O Pedido #${id} foi atualizado para ENTREGUE! (A lógica de envio será implementada na versão 2.0)`);
     }
 
-    renderizarPedidos();
+    // Inicia o ataque assim que a página carrega!
+    carregarPedidosDaFeira();
 });
