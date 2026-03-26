@@ -1,45 +1,36 @@
-# 🛒 Feira Virtual de Pequenos Produtores
+# 🛒 Virtual Farmers Market for Small Producers
 
+![Project Status](https://img.shields.io/badge/Status-In_Development-yellow)
 
-![Status do Projeto](https://img.shields.io/badge/Status-Em_Desenvolvimento-yellow)
+## 📌 About the Project
+Family farming, the primary source of food in the Brazilian countryside, faces enormous barriers regarding market and technology access. This project, developed as a Capstone Project (TCC), applies software engineering to generate **real social impact**. The platform integrates an agile web interface with a robust and secure back-end infrastructure. 
 
-## 📌 Sobre o Projeto
-A agricultura familiar, principal responsável pelos alimentos no campo no Brasil, enfrenta enormes barreiras de acesso ao mercado e tecnologia. Este projeto, desenvolvido como Trabalho de Conclusão de Curso (TCC), aplica a engenharia de software para gerar **impacto social real**. A plataforma integra uma interface web ágil com uma infraestrutura de back-end robusta e segura. 
-
-Logo, este projeto tem como sua estrutura um ecossistema **Full-Stack** projetado para eliminar intermediários na cadeia de alimentos, conectando consumidores a alimentos frescos e locais, além de oferecer gestão profissional para pequenos produtores.
-
----
-
-## ⚙️ Funcionalidades Desenvolvidas:
-
-### Front-end (Experiência do Cliente & Produtor)
-* **Design Responsivo e UI/UX:** Layouts focados na conversão e fluidez em dispositivos móveis e desktops (HTML5, CSS3, Flexbox, Grid).
-* **Consumo Dinâmico (Vanilla JS):** Requisições assíncronas nativas (`fetch` API) para renderização de vitrines sem recarregamento de página.
-* **Filtros em Tempo Real:** Sistema de pesquisa e organização de produtos processados instantaneamente através do JavaScript.
-* **Dashboard do Produtor:** Painel interativo para operações de CRUD (Visualização, Cadastro e Exclusão de itens do catálogo).
-* **Controle de Acesso Baseado em Papéis (RBAC):** Renderização condicional da interface (UX dinâmica). O sistema identifica se o usuário autenticado é um "Comprador" ou "Produtor", adaptando os menus, botões e painéis de controle para cada perfil com segurança.
-* **Gestão de Sessão e Carrinho Inteligente:** Carrinhos de compra atrelados individualmente a cada usuário no banco, com cálculo em tempo real e histórico de pedidos renderizado dinamicamente.
-
-### Back-end & Infraestrutura (Gestão de Dados)
-* **Arquitetura de Microsserviços:** Divisão clara de responsabilidades no back-end utilizando ecossistemas variados.
-* **Java/Spring Boot (Usuários e Pedidos):** Gerencia a autenticação, controle de perfis (Comprador/Produtor) e todo o fluxo de histórico de vendas e pedidos no banco.
-* **API RESTful (Python/FastAPI):** Comunicação rápida, eficiente e tipada focada exclusivamente no gerenciamento do catálogo de produtos.
-* **API Gateway (Node.js):** Implementação de um servidor Node.js/Express para atuar como o ponto único de contato (BFF), roteando as requisições para os serviços corretos.
-* **Mapeamento Objeto-Relacional (JPA/Hibernate):** Utilizado no Spring Boot para modelagem complexa e geração automática das tabelas e amarrações (Foreign Keys) no MySQL.
-* **Banco de Dados Relacional:** Modelagem centralizada no **MySQL**, garantindo integridade das informações e persistência real dos dados.
-* **Isolamento de Dados & CORS:** Configuração de middleware de segurança para permitir acesso controlado às rotas das APIs.
+Therefore, this project is built upon a **Full-Stack** ecosystem designed to eliminate intermediaries in the food supply chain, connecting consumers to fresh, local food while offering professional management tools for small producers.
 
 ---
 
-## 🚀 Próximos Passos (Roadmap)
-* Implementação de Gateway de Pagamento para checkout real.
-* Deploy em Nuvem (Cloud Hosting) para os microsserviços e banco de dados.
-* Amarração de Foreign Key conectando cada Produto diretamente ao ID de seu Produtor exclusivo.
-* Sistema de atualização de status do pedido em tempo real na visão do cliente (Preparando -> Saiu para Entrega).
+## ⚙️ Developed Features
+
+### Front-end (Customer & Producer Experience)
+* **Responsive Design and UI/UX:** Layouts focused on conversion and fluidity on mobile devices and desktops (HTML5, CSS3, Flexbox, Grid).
+* **Dynamic Data Consumption (Vanilla JS):** Native asynchronous requests (`fetch` API) to render storefronts without page reloads.
+* **Real-Time Filters:** Instant product search and organization system processed via JavaScript.
+* **Producer Dashboard:** Interactive panel for CRUD operations (Viewing, Creating, and Deleting catalog items).
+* **Role-Based Access Control (RBAC):** Conditional interface rendering (dynamic UX). The system safely identifies whether the authenticated user is a "Buyer" or a "Producer," adapting menus, buttons, and control panels for each profile.
+* **Session Management & Smart Cart:** Shopping carts individually linked to each user in the database, with real-time calculations and a dynamically rendered order history.
+
+### Back-end & Infrastructure (Data Management)
+* **Microservices Architecture:** Clear division of backend responsibilities using diverse ecosystems.
+* **Java/Spring Boot (Users and Orders):** Manages authentication, profile control (Buyer/Producer), and the entire flow of sales history and orders within the database.
+* **RESTful API (Python/FastAPI):** Fast, efficient, and strongly typed communication focused exclusively on product catalog management.
+* **API Gateway (Node.js):** Implementation of a Node.js/Express server to act as a single point of contact (BFF - Backend for Frontend), routing requests to the correct services.
+* **Object-Relational Mapping (JPA/Hibernate):** Used in Spring Boot for complex modeling and automatic generation of tables and relationships (Foreign Keys) in MySQL.
+* **Relational Database:** Centralized modeling in **MySQL**, ensuring information integrity and real data persistence.
+* **Data Isolation & CORS:** Security middleware configuration to allow controlled access to API routes.
 
 ---
 
-## 🛠️ Tecnologias & Ferramentas
+## 🛠️ Technologies & Tools
 
 <br>
 
