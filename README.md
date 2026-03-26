@@ -1,6 +1,6 @@
 # 🛒 Virtual Farmers Market for Small Producers
 
-![Project Status](https://img.shields.io/badge/Status-In_Development-yellow)
+![Project Status](https://img.shields.io/badge/Status-Completed_--_Updates_Pending-brightgreen)
 
 ## 📌 About the Project
 Family farming, the primary source of food in the Brazilian countryside, faces enormous barriers regarding market and technology access. This project, developed as a Capstone Project (TCC), applies software engineering to generate **real social impact**. The platform integrates an agile web interface with a robust and secure back-end infrastructure. 
